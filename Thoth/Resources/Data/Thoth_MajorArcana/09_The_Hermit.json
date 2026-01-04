@@ -1,0 +1,11 @@
+{
+  "Arcana": {
+    "Categorization": "Major",
+    "Number": 9,
+    "Name": "The Hermit",
+    "ShortDescription": "Introspection, Solitude, Guidance"
+  },
+  "Zodiac": "Virgo",
+  "Element": "Earth",
+  "Mode": "Mutable"
+}

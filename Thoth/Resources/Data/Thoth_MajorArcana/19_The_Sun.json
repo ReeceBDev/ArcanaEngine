@@ -1,0 +1,11 @@
+{
+  "Arcana": {
+    "Categorization": "Major",
+    "Number": 19,
+    "Name": "The Sun",
+    "ShortDescription": "Success, Vitality, Joy"
+  },
+  "Zodiac": "Sun",
+  "Element": "Fire",
+  "Mode": "Fixed"
+}

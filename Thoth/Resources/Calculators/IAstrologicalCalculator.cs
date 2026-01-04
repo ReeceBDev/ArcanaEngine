@@ -5,8 +5,9 @@ namespace Thoth.Resources.Calculators
 {
     internal interface IAstrologicalCalculator
     {
-        ICelestialDegree GetZodiacalSunDegree(DateTime birthDate);
-        ICelestialDegree GetCelestialPositionByTime(CelestialBody body, DateTimeOffset birthTime);
-        ICelestialDegree GetAscendantByTime(DateTimeOffset birthTime, double latitude, double longitude);
+        int GetZodiacalSunDegree(DateTime birthDate);
+        int GetEclipticDegreeByTime(CelestialBody body, DateTimeOffset birthTime);
+        int GetAscendantByTime(DateTimeOffset birthTime, double latitude, double longitude);
+        EclipticZodiac GetEclipticZodiacByDegree(int absoluteDegree);
     }
 }

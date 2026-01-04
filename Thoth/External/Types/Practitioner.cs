@@ -3,6 +3,7 @@ using Thoth.External.InternalConcreteDependencies;
 using Thoth.Managers;
 using Thoth.Resources;
 using Thoth.Resources.Calculators;
+using Thoth.Resources.Json;
 using Thoth.Types.Practitioner;
 
 namespace Thoth.External.Types
@@ -11,10 +12,12 @@ namespace Thoth.External.Types
     {     
         private static readonly IAstrologicalCalculator astrologicalCalculator = new AstrologicalCalculator();
         private static readonly IThothCalculator thothCalculator = new ThothCalculator();
-        private static readonly ICardIndexNavigator cardGenerator = new CardIndexNavigator();
-        private static readonly ICardMeaningService cardFetcher = new CardMeaningService(thothCalculator, cardGenerator);
+        private static readonly IThothDeck cardBuilder = new ThothDeck();
+        private static readonly ITransliterator transliterator = new Transliterator();
+        private static readonly IGemetriaCalculator gemetriaCalculator = new GemetriaCalculator();
+        private static readonly ICardProvider cardFetcher = new CardProvider(thothCalculator, cardBuilder, transliterator, gemetriaCalculator, astrologicalCalculator);
 
-        private IThelemite currentPractitioner;
+        private readonly IThelemite currentPractitioner;
 
 
         /// <summary> Returns an empty practitioner. The practitioner's name or birthdate must be set before values can be pulled. </summary>
@@ -148,37 +151,32 @@ namespace Thoth.External.Types
             if (personalityCard is not null) { aggregatedCards.Add(new ArcanaCard(personalityCard, ArcanaRole.PersonalityCard)); }
             if (characterCard is not null) { aggregatedCards.Add(new ArcanaCard(characterCard, ArcanaRole.CharacterCard)); }
 
-            output = aggregatedCards.ToImmutableArray();
+            output = [.. aggregatedCards];
             return output;
         }
 
         /// <summary> Retrieves the practitioner's Growth Cards. Can be configured to target specific years, relative to the current year. </summary>
         public ImmutableArray<IArcanaCard> GetGrowthCards(int yearsBeforeNow = 0, int yearsBeyondNow = 0)
         {
-            if (currentPractitioner.GrowthCardOffset is null)
-            {
-                //Instructional errors for teaching users how to use this API correctly.
-                if (currentPractitioner.DateOfBirth is null)
-                    throw new Exception($"In order to retrieve correspondence cards, {nameof(Practitioner)} must have been configured using {nameof(SetBirthdate)}");
-
-                return [];
-            }
-
             ImmutableArray<IArcanaCard> output;
 
+            DateTime? nativetyDate = currentPractitioner.DateOfBirth;
             List<IArcanaCard> aggregatedCards = [];
-            int offset = (int) currentPractitioner.GrowthCardOffset;
             int earliestYear = DateTime.Now.Year - yearsBeforeNow;
             int latestYear = DateTime.Now.Year + yearsBeyondNow;
 
-            //Select and aggregate valid cards on a case by case basis.
-            for (int i = earliestYear; i <= latestYear; i++)
-            {
-                var growthCard = cardFetcher.GetGrowthCardByYear(i);
-                aggregatedCards.Add(new ArcanaCard(growthCard, ArcanaRole.GrowthCard));
-            }
+            // Instructional errors for teaching users how to use this API correctly.
+            if (nativetyDate is null)
+                throw new Exception($"In order to retrieve growth cards, {nameof(Practitioner)} must have been configured using {nameof(SetBirthdate)}");
+            else
+                //Select and aggregate valid cards on a case by case basis.
+                for (int i = earliestYear; i <= latestYear; i++)
+                {
+                    var growthCard = cardFetcher.GetGrowthCardByYear(i, (DateTime) nativetyDate);
+                    aggregatedCards.Add(new ArcanaCard(growthCard, ArcanaRole.GrowthCard));
+                }
 
-            output = aggregatedCards.ToImmutableArray();
+            output = [.. aggregatedCards];
             return output;
         }
 

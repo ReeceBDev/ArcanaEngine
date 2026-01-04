@@ -2,7 +2,7 @@
 {
     internal enum MajorArcana
     {
-        Error = 0,
+        TheFool = 0,
         TheMagus = 1,
         TheHighPriestess = 2,
         TheEmpress = 3,
@@ -22,8 +22,7 @@
         TheStar = 17,
         TheMoon = 18,
         TheSun = 19,
-        Aeon = 20,
-        Universe = 21,
-        TheFool = 22,
+        TheAeon = 20,
+        TheUniverse = 21,
     }
 }

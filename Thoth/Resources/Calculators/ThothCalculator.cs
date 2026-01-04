@@ -1,4 +1,7 @@
-﻿namespace Thoth.Resources.Calculators
+﻿using Thoth.Types.Thoth.ArcanaData;
+using Thoth.Types.Zodiacal;
+
+namespace Thoth.Resources.Calculators
 {
     internal class ThothCalculator : IThothCalculator
     {
@@ -36,5 +39,8 @@
 
             return calculatedValue;
         }
+
+        public MajorArcana GetArcanaByZodiac(EclipticZodiac zodiac)
+            => ArcanaToZodiacMapping.EclipticToArcana[zodiac];
     }
 }

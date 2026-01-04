@@ -9,7 +9,7 @@ namespace Thoth.Types.Practitioner
     /// <summary> Collection of celestial correspondencies which relate to each of the celestial bodies. </summary>
     internal class CelestialWheel : ICelestialCorrespondences
     {
-        private readonly ICardMeaningService cardFetcher;
+        private readonly ICardProvider cardFetcher;
         private readonly IAstrologicalCalculator astrologicalCalculator;
 
         private DateTime? dateOfBirth;
@@ -40,7 +40,7 @@ namespace Thoth.Types.Practitioner
         /// <summary> The zodiacal correspondence of Saturn. </summary>
         public IZodiacalArcanaCorrespondence? SaturnSign { get; set; }
 
-        public CelestialWheel(ICardMeaningService setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, DateTime birthDate)
+        public CelestialWheel(ICardProvider setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, DateTime birthDate)
         {
             cardFetcher = setCardFetcher;
             astrologicalCalculator = setAstrologicalCalculator;
@@ -48,13 +48,13 @@ namespace Thoth.Types.Practitioner
             SetBirthDate(birthDate);
         }
 
-        public CelestialWheel(ICardMeaningService setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, DateTime birthDate, DateTimeOffset birthTime)
+        public CelestialWheel(ICardProvider setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, DateTime birthDate, DateTimeOffset birthTime)
             : this(setCardFetcher, setAstrologicalCalculator, birthDate)
         {
             SetBirthTime(birthTime);
         }
 
-        public CelestialWheel(ICardMeaningService setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, DateTime birthDate, DateTimeOffset birthTime,
+        public CelestialWheel(ICardProvider setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, DateTime birthDate, DateTimeOffset birthTime,
             double latitude, double longitude) : this(setCardFetcher, setAstrologicalCalculator, birthDate, birthTime)
         {
             SetLocation(latitude, longitude);
@@ -83,19 +83,14 @@ namespace Thoth.Types.Practitioner
             if (!dateOfBirth.HasValue)
                 throw new InvalidOperationException($"{nameof(dateOfBirth)} was null! Cannot generate sun sign.");
 
-            ICelestialDegree celestialDegree;
+            int absoluteDegree;
 
             // Try to generate the most accurate celestial degree we have available for the sun sign
-            if (birthTime.HasValue)
-            {
-                celestialDegree = astrologicalCalculator.GetCelestialPositionByTime(CelestialBody.Sun, birthTime.Value);
-            }
-            else
-            {
-                celestialDegree = astrologicalCalculator.GetZodiacalSunDegree(dateOfBirth.Value);
-            }
+            absoluteDegree = birthTime.HasValue ? 
+                absoluteDegree = astrologicalCalculator.GetEclipticDegreeByTime(CelestialBody.Sun, birthTime.Value) :
+                absoluteDegree = astrologicalCalculator.GetZodiacalSunDegree(dateOfBirth.Value);
 
-            return new ZodiacalCorrespondence(cardFetcher, celestialDegree);
+            return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
         }
 
         private IZodiacalArcanaCorrespondence GenerateSignByTime(CelestialBody body)
@@ -103,8 +98,8 @@ namespace Thoth.Types.Practitioner
             if (!birthTime.HasValue)
                 throw new InvalidOperationException($"{nameof(birthTime)} was null! Cannot generate {body} sign.");
 
-            ICelestialDegree celestialDegree = astrologicalCalculator.GetCelestialPositionByTime(body, birthTime.Value);
-            return new ZodiacalCorrespondence(cardFetcher, celestialDegree);
+            int absoluteDegree = astrologicalCalculator.GetEclipticDegreeByTime(body, birthTime.Value);
+            return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
         }
 
         private IZodiacalArcanaCorrespondence GenerateAscendantSign()
@@ -112,8 +107,8 @@ namespace Thoth.Types.Practitioner
             if (!birthTime.HasValue || !birthLocation.HasValue)
                 throw new InvalidOperationException("Birth time and location required to generate ascendant sign.");
 
-            ICelestialDegree celestialDegree = astrologicalCalculator.GetAscendantByTime(birthTime.Value, birthLocation.Value.latitude, birthLocation.Value.longitude);
-            return new ZodiacalCorrespondence(cardFetcher, celestialDegree);
+            int absoluteDegree = astrologicalCalculator.GetAscendantByTime(birthTime.Value, birthLocation.Value.latitude, birthLocation.Value.longitude);
+            return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
         }
 
         private void RefreshAllSigns()

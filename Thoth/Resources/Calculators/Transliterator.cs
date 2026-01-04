@@ -1,7 +1,7 @@
 ﻿namespace Thoth.Resources.Calculators
 {
-    internal static class Transliterator
+    internal class Transliterator : ITransliterator
     {
-        public static void ConvertToHebrewSymbomatically() => throw new NotImplementedException();
+        public string ConvertToHebrewSymbomatically(string name) => throw new NotImplementedException();
     }
 }

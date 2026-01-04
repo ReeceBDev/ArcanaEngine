@@ -9,7 +9,7 @@ namespace Thoth.Types.Practitioner
 {
     internal class Thelemite : IThelemite
     {
-        private readonly ICardMeaningService cardFetcher;
+        private readonly ICardProvider cardFetcher;
         private readonly IAstrologicalCalculator astrologicalCalculator;
         private readonly IThothCalculator thothCalculator;
 
@@ -48,10 +48,10 @@ namespace Thoth.Types.Practitioner
         /// <summary> The practitioner's own celestial wheel configuration at the time of their nativety. </summary>
         public ICelestialCorrespondences? CelestialWheel { get; private set; }
 
-        /// <summary> The zodiacal degree relative to this practitioner's sign, as around the Celestial Wheel. </summary>
-        public int? RelativeCelestialDegree { get; private set; }
+        /// <summary> The absolute ecliptic degree at the practitioner's nativety, used around the Celestial Wheel. </summary>
+        public int? AbsoluteEclipticDegree { get; private set; }
 
-        public Thelemite(ICardMeaningService setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, IThothCalculator setThothCalculator)
+        public Thelemite(ICardProvider setCardFetcher, IAstrologicalCalculator setAstrologicalCalculator, IThothCalculator setThothCalculator)
         {
             cardFetcher = setCardFetcher;
             astrologicalCalculator = setAstrologicalCalculator;

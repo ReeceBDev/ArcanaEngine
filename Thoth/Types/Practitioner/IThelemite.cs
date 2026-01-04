@@ -13,7 +13,7 @@ namespace Thoth.Types.Practitioner
         /// <summary> A practitioner's date of birth. </summary>
         DateTime? DateOfBirth { get; }
 
-        /// <summary> A practitioner's precise time of birth. Must be accurate to the hour. Prefer at least an accuracy of ~30 minutes or better. </summary>
+        /// <summary> A practitioner's precise time of birth. Must be accurate to the hour and include a timezone. Prefers at least an accuracy of ~30 minutes or better. </summary>
         DateTimeOffset? TimeOfBirth { get; }
 
         /// <summary> A practitioner's general location at the time of their birth. Must be accurate to their time zone at the time. </summary>
@@ -41,8 +41,8 @@ namespace Thoth.Types.Practitioner
         /// <summary> The practitioner's own celestial wheel configuration at the time of their nativety. </summary>
         ICelestialCorrespondences? CelestialWheel { get; }
 
-        /// <summary> The zodiacal degree relative to this practitioner's sign, as around the Celestial Wheel. </summary>
-        int? RelativeCelestialDegree { get; }
+        /// <summary> The absolute ecliptic degree at the practitioner's nativety, used around the Celestial Wheel. </summary>
+        int? AbsoluteEclipticDegree { get; }
 
 
         IThelemite SetName(string fullName);

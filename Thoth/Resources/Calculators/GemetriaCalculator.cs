@@ -1,7 +1,14 @@
-﻿namespace Thoth.Resources.Calculators
+﻿using System.Collections.Immutable;
+
+namespace Thoth.Resources.Calculators
 {
-    internal static class GemetriaCalculator
+    internal class GemetriaCalculator : IGemetriaCalculator
     {
-        public static void GetDecansByAstrological() => throw new NotImplementedException();
+        public int GetGemetriaValues(string inputHebrew)
+        {
+            //Note: Remember to perform the conversion as a string, so that they are easily concatenatable, then int.Parse() the string - this way, integers do not get wrongly added!
+            throw new NotImplementedException();
+        }
+            
     }
 }

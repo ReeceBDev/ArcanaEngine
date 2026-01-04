@@ -1,6 +1,6 @@
 ﻿namespace Thoth.Types.Thoth.Data
 {
-    internal enum ArcanaSuit
+    internal enum MinorArcanaSuit
     {
         Wands,
         Cups,

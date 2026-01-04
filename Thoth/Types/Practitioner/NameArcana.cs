@@ -8,7 +8,7 @@ namespace Thoth.Types.Practitioner
     /// <summary> Name-specific Arcane Cards which are calculated from transliterating the practitioner's names into Hebrew gematria. </summary>
     internal class NameArcana : INameArcana
     {
-        public readonly ICardMeaningService cardFetcher;
+        public readonly ICardProvider cardFetcher;
 
         /// <summary> The arcana and archetypes related to the practitioner's first name. Represents the practitioner's inner character. </summary>
         public IArchetype? FirstNameArcana { get; private set; }
@@ -22,7 +22,7 @@ namespace Thoth.Types.Practitioner
         /// <summary> The arcana and archetypes related to the practitioner's full and complete name. Represents a binding of the partial names under one whole. </summary>
         public IArchetype? FullNameArcana { get; private set; }
 
-        public NameArcana(ICardMeaningService setCardFetcher)
+        public NameArcana(ICardProvider setCardFetcher)
         {
             cardFetcher = setCardFetcher;
         }
@@ -65,7 +65,7 @@ namespace Thoth.Types.Practitioner
             string cleanName = hypenlessName.Replace(" ", "");
 
             // Generate the arcana card
-            return cardFetcher.GetCardByName(cleanName);
+            return cardFetcher.GetCardByHebrewName(cleanName);
         }
     }
 }

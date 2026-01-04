@@ -10,7 +10,7 @@ namespace Thoth.Types.Thoth.CardDataStructure
         IArcana Arcana { get; }
 
         /// <summary> The zodiacal sign which this Arcana relates to. </summary>
-        AstrologicalSign? Zodiac { get; }
+        EclipticZodiac? Zodiac { get; }
 
         /// <summary> The alchemical element which this Arcana represents. </summary>
         AlchemicalElement? Element { get; }

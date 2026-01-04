@@ -25,7 +25,7 @@ namespace Thoth.Resources.Json
             // Deserialize implicitly concrete types (enums)
             AlchemicalElement? element = DeserializeNullableProperty<AlchemicalElement>(root, "Element", options);
             AstrologicalMode? mode = DeserializeNullableProperty<AstrologicalMode>(root, "Mode", options);
-            AstrologicalSign? zodiac = DeserializeNullableProperty<AstrologicalSign>(root, "Zodiac", options);
+            EclipticZodiac? zodiac = DeserializeNullableProperty<EclipticZodiac>(root, "Zodiac", options);
 
 
             // Combine all realized data structures together into the whole and final type

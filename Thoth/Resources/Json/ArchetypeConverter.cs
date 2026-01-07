@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 using Thoth.Types.Alchemy;
-using Thoth.Types.Thoth.CardDataStructure;
+using Thoth.Types.Thoth;
 using Thoth.Types.Zodiacal;
 
 namespace Thoth.Resources.Json

@@ -1,4 +1,4 @@
-﻿using Thoth.Types.Thoth.CardDataStructure;
+﻿using Thoth.Types.Thoth;
 using Thoth.Types.Zodiacal;
 
 namespace Thoth.Managers
@@ -21,7 +21,7 @@ namespace Thoth.Managers
 
         /// <summary> Represents a zodiacal representation of a side of the Practitioner's soul, i.e. internal, external, how they relate to people, etc. 
         /// When in its innermost concentric sun form, this would be analogous to the colour of the Practitioner - their inner essence, drive and being. </summary>
-        IArchetype GetZodiacCard(int absoluteDegree);
+        IArchetype GetZodiacCard(EclipticZodiac sign);
 
         /// <summary> Calculates a Practitioner's Decan based on their absolute eliptic degree. </summary>
         IArchetype GetDecanCard(int absoluteDegree);

@@ -1,16 +1,15 @@
 ﻿using Thoth.Managers;
-using Thoth.Types.Thoth.CardDataStructure;
 using Thoth.Types.Zodiacal;
 
 namespace Thoth.Types.Thoth
 {
     internal class ZodiacalCorrespondence : IZodiacalArcanaCorrespondence
     {
-        public ZodiacalCorrespondence(ICardProvider cardFetcher, int absoluteDegree)
+        public ZodiacalCorrespondence(ICardProvider cardProvider, IEclipticDegree zodiacalDegree)
         {
-            Zodiac = cardFetcher.GetZodiacCard(absoluteDegree);
-            Decan = cardFetcher.GetDecanCard(absoluteDegree);
-            Court = cardFetcher.GetCourtCard(absoluteDegree);
+            Zodiac = cardProvider.GetZodiacCard(zodiacalDegree.Sign);
+            Decan = cardProvider.GetDecanCard(zodiacalDegree.AbsoluteDegree);
+            Court = cardProvider.GetCourtCard(zodiacalDegree.AbsoluteDegree);
         }
 
         public IArchetype Zodiac { get; init; }

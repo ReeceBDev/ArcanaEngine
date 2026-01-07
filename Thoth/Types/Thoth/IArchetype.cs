@@ -1,7 +1,7 @@
 ﻿using Thoth.Types.Alchemy;
 using Thoth.Types.Zodiacal;
 
-namespace Thoth.Types.Thoth.CardDataStructure
+namespace Thoth.Types.Thoth
 {
     /// <summary> Brings an Arcana and its related aspects together into one archetypical whole. </summary>
     internal interface IArchetype

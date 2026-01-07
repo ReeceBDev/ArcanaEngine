@@ -1,6 +1,6 @@
 ﻿using Thoth.Types.Thoth.Data;
 
-namespace Thoth.Types.Thoth.CardDataStructure
+namespace Thoth.Types.Thoth
 {
     /// <summary> An Arcana as represented by its card. </summary>
     internal interface IArcana

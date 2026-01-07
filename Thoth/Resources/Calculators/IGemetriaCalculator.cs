@@ -1,9 +1,7 @@
-﻿using System.Collections.Immutable;
-
-namespace Thoth.Resources.Calculators
+﻿namespace Thoth.Resources.Calculators
 {
     internal interface IGemetriaCalculator
     {
-        int GetGemetriaValues(string inputHebrew);
+        int GetGemetriaHebrewAppromimation(string inputHebrew);
     }
 }

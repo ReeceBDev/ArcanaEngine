@@ -83,11 +83,11 @@ namespace Thoth.Types.Practitioner
             if (!dateOfBirth.HasValue)
                 throw new InvalidOperationException($"{nameof(dateOfBirth)} was null! Cannot generate sun sign.");
 
-            int absoluteDegree;
+            IEclipticDegree absoluteDegree;
 
             // Try to generate the most accurate celestial degree we have available for the sun sign
             absoluteDegree = birthTime.HasValue ? 
-                absoluteDegree = astrologicalCalculator.GetEclipticDegreeByTime(CelestialBody.Sun, birthTime.Value) :
+                absoluteDegree = astrologicalCalculator.GetCelestialPositionByTime(CelestialBody.Sun, birthTime.Value) :
                 absoluteDegree = astrologicalCalculator.GetZodiacalSunDegree(dateOfBirth.Value);
 
             return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
@@ -98,7 +98,7 @@ namespace Thoth.Types.Practitioner
             if (!birthTime.HasValue)
                 throw new InvalidOperationException($"{nameof(birthTime)} was null! Cannot generate {body} sign.");
 
-            int absoluteDegree = astrologicalCalculator.GetEclipticDegreeByTime(body, birthTime.Value);
+            IEclipticDegree absoluteDegree = astrologicalCalculator.GetCelestialPositionByTime(body, birthTime.Value);
             return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
         }
 
@@ -107,7 +107,7 @@ namespace Thoth.Types.Practitioner
             if (!birthTime.HasValue || !birthLocation.HasValue)
                 throw new InvalidOperationException("Birth time and location required to generate ascendant sign.");
 
-            int absoluteDegree = astrologicalCalculator.GetAscendantByTime(birthTime.Value, birthLocation.Value.latitude, birthLocation.Value.longitude);
+            IEclipticDegree absoluteDegree = astrologicalCalculator.GetAscendantByTime(birthTime.Value, birthLocation.Value.latitude, birthLocation.Value.longitude);
             return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
         }
 

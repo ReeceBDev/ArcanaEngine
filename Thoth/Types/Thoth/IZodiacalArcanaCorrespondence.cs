@@ -1,6 +1,4 @@
-﻿using Thoth.Types.Thoth.CardDataStructure;
-
-namespace Thoth.Types.Thoth
+﻿namespace Thoth.Types.Thoth
 {
     /// <summary> A set of Arcana which relate to a Zodiacal correspondence upon a practitioner's natevity. </summary>
     internal interface IZodiacalArcanaCorrespondence

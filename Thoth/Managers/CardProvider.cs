@@ -1,8 +1,7 @@
-﻿using System.Collections.Immutable;
-using Thoth.Resources.Calculators;
+﻿using Thoth.Resources.Calculators;
 using Thoth.Resources.Json;
-using Thoth.Types.Thoth.ArcanaData;
-using Thoth.Types.Thoth.CardDataStructure;
+using Thoth.Types.Thoth;
+using Thoth.Types.Thoth.Data;
 using Thoth.Types.Zodiacal;
 
 namespace Thoth.Managers
@@ -10,14 +9,12 @@ namespace Thoth.Managers
     internal class CardProvider(
         IThothCalculator thothCalculator, 
         IThothDeck cardBuilder, 
-        ITransliterator transliterator, 
         IGemetriaCalculator gemetriaCalculator,
         IAstrologicalCalculator astrologicalCalculator)
         : ICardProvider
     {
         private readonly IThothCalculator thothCalculator = thothCalculator;
         private readonly IThothDeck cardBuilder = cardBuilder;
-        private readonly ITransliterator transliterator = transliterator;
         private readonly IGemetriaCalculator gemetriaCalculator = gemetriaCalculator;
         private readonly IAstrologicalCalculator astrologicalCalculator = astrologicalCalculator;
 
@@ -29,16 +26,15 @@ namespace Thoth.Managers
             int precalculatedSum = nativetyDay + nativetyMonth + year;
             int crossSum = thothCalculator.CalculateCrossSum(precalculatedSum);
 
-            return cardBuilder.GetMajorArcanaByIndex(crossSum); ;
+            return cardBuilder.FetchMajorArcana(crossSum); ;
         }
 
         public IArchetype GetCardByHebrewName(string name)
         {
-            string hebrewLiteralSymbols = transliterator.ConvertToHebrewSymbomatically(name);
-            int nameAsGemetria = gemetriaCalculator.GetGemetriaValues(hebrewLiteralSymbols);
+            int nameAsGemetria = gemetriaCalculator.GetGemetriaHebrewAppromimation(name);
             int nameCrossSum = thothCalculator.CalculateCrossSum(nameAsGemetria);
 
-            return cardBuilder.GetMajorArcanaByIndex(nameCrossSum);
+            return cardBuilder.FetchMajorArcana(nameCrossSum);
         }
         
         public IArchetype? GetTeacherCard(DateTime birthDate)
@@ -47,31 +43,34 @@ namespace Thoth.Managers
             var teacherCrossSum = thothCalculator.CalculateCrossSum(personalityCrossSum);
 
             // The practitioner draws no teacher card if their cross-sum cannot be further reduced from their character card...
-            return personalityCrossSum == teacherCrossSum ? null : cardBuilder.GetMajorArcanaByIndex(teacherCrossSum);
+            return personalityCrossSum == teacherCrossSum ? null : cardBuilder.FetchMajorArcana(teacherCrossSum);
         }
 
         public IArchetype GetPersonalityCard(DateTime birthDate)
         {
             int crossSum = CalculatePersonalitySum(birthDate);
-            return cardBuilder.GetMajorArcanaByIndex(crossSum);
+            return cardBuilder.FetchMajorArcana(crossSum);
         }
 
-        public IArchetype GetZodiacCard(int absoluteDegree)
+        public IArchetype GetZodiacCard(EclipticZodiac sign)
         {
-            EclipticZodiac zodiac = astrologicalCalculator.GetEclipticZodiacByDegree(absoluteDegree);
-            MajorArcana arcana = thothCalculator.GetArcanaByZodiac(zodiac);
+            MajorArcana arcana = thothCalculator.GetMajorArcanaByZodiac(sign);
 
-            return cardBuilder.GetMajorArcanaByIndex((int) arcana);
+            return cardBuilder.FetchMajorArcana((int) arcana);
         }
 
         public IArchetype GetDecanCard(int absoluteDegree)
         {
-            throw new NotImplementedException();
+            MinorArcanaAddedToOffset minorArcana = thothCalculator.GetDecanCardByAbsoluteDegree(absoluteDegree);
+
+            return cardBuilder.FetchMinorArcana(minorArcana);
         }
 
         public IArchetype GetCourtCard(int absoluteDegree)
         {
-            throw new NotImplementedException();
+            MinorArcanaAddedToOffset minorArcana = thothCalculator.GetCourtCardByAbsoluteDegree(absoluteDegree);
+            
+            return cardBuilder.FetchMinorArcana(minorArcana);
         }
 
         private int CalculatePersonalitySum(DateTime birthDate)

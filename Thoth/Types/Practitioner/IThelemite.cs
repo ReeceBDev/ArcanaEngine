@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using Thoth.Types.Thoth.CardDataStructure;
+using Thoth.Types.Thoth;
 using Thoth.Types.Transliteration;
 
 namespace Thoth.Types.Practitioner

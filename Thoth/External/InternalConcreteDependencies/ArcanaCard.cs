@@ -1,5 +1,5 @@
 ﻿using Thoth.External.Types;
-using Thoth.Types.Thoth.CardDataStructure;
+using Thoth.Types.Thoth;
 
 namespace Thoth.External.InternalConcreteDependencies
 {

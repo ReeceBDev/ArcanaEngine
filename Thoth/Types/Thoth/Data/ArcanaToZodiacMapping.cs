@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Text;
+﻿using System.Collections.Immutable;
 using Thoth.Types.Zodiacal;
 
-namespace Thoth.Types.Thoth.ArcanaData
+namespace Thoth.Types.Thoth.Data
 {
     internal static class ArcanaToZodiacMapping
     {

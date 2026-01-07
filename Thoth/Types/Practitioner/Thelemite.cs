@@ -2,8 +2,8 @@
 using Thoth.Types.Transliteration;
 using Thoth.Managers;
 using Thoth.Resources;
-using Thoth.Types.Thoth.CardDataStructure;
 using Thoth.Resources.Calculators;
+using Thoth.Types.Thoth;
 
 namespace Thoth.Types.Practitioner
 {

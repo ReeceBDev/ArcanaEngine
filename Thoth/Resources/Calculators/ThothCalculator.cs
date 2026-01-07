@@ -1,10 +1,20 @@
-﻿using Thoth.Types.Thoth.ArcanaData;
+﻿using Thoth.Resources.Json;
+using Thoth.Types.Thoth;
+using Thoth.Types.Thoth.Data;
 using Thoth.Types.Zodiacal;
 
 namespace Thoth.Resources.Calculators
 {
-    internal class ThothCalculator : IThothCalculator
+    internal class ThothCalculator(IThothDeck thothDeck) : IThothCalculator
     {
+        private IThothDeck thothDeck = thothDeck;
+
+        private const int decanDegreeStep = 10;             // Degree difference between consecutive decans
+        private const int courtCardDegreeStep = 30;         // Degree difference between consecutive court cards.
+        private const int firstCourtCardDegree = 21;        // Starting degree of the first court card. Court cards then increment by each 30 degree step.
+        private const int totalZodiacDegrees = 360;         // Total degrees in the circle which forms the zodiac.
+
+
         public int CalculateGrowthOffset(DateTime nativety, int targetYear)
         {;
             int birthDate = nativety.Day;
@@ -40,7 +50,45 @@ namespace Thoth.Resources.Calculators
             return calculatedValue;
         }
 
-        public MajorArcana GetArcanaByZodiac(EclipticZodiac zodiac)
+        public MajorArcana GetMajorArcanaByZodiac(EclipticZodiac zodiac)
             => ArcanaToZodiacMapping.EclipticToArcana[zodiac];
+
+        public MinorArcanaAddedToOffset GetDecanCardByAbsoluteDegree(int absoluteDegree)
+        {
+            if (absoluteDegree < 0 || absoluteDegree > 359)
+                throw new ArgumentOutOfRangeException(nameof(absoluteDegree));
+
+
+            // Count how many full 10-degree steps fit below the input degree
+            int numberOfStepsBelow = absoluteDegree / decanDegreeStep;
+
+            // Compute the lower decan degree based on the step count
+            int snappedDecanDegree = numberOfStepsBelow * decanDegreeStep;
+
+
+            return ZodiacToDecanMapping.DegreeToDecan[snappedDecanDegree];
+        }
+
+        public MinorArcanaAddedToOffset GetCourtCardByAbsoluteDegree(int absoluteDegree)
+        {
+            if (absoluteDegree < 0 || absoluteDegree > 359)
+                throw new ArgumentOutOfRangeException(nameof(absoluteDegree));
+
+
+            // Distance from the first court card degree
+            double offsetFromFirstCard = absoluteDegree - firstCourtCardDegree;
+
+            // Count how many full 30-degree steps fit below the input degree
+            int numberOfStepsBelow = (int)Math.Floor(offsetFromFirstCard / courtCardDegreeStep);
+
+            // Compute the lower court card degree based on the step count
+            int snappedCourtCardDegree = numberOfStepsBelow * courtCardDegreeStep + firstCourtCardDegree;
+
+            // Wrap around the zodiac circle when the degree is below the first card
+            int wrappedCourtCardDegree = (snappedCourtCardDegree + totalZodiacDegrees) % totalZodiacDegrees;
+
+
+            return ZodiacToCourtMapping.DegreeToCourt[wrappedCourtCardDegree];
+        }
     }
 }

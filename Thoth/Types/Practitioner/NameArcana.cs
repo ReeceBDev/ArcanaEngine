@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using Thoth.Managers;
-using Thoth.Types.Thoth.CardDataStructure;
+using Thoth.Types.Thoth;
 
 namespace Thoth.Types.Practitioner
 {

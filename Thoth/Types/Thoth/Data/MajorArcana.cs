@@ -1,4 +1,4 @@
-﻿namespace Thoth.Types.Thoth.ArcanaData
+﻿namespace Thoth.Types.Thoth.Data
 {
     internal enum MajorArcana
     {

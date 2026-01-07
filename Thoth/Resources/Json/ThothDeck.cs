@@ -1,16 +1,17 @@
-﻿using System;
-using System.Text.Json;
-using Thoth.Types.Thoth.ArcanaData;
-using Thoth.Types.Thoth.CardDataStructure;
+﻿using System.Text.Json;
+using Thoth.Types.Thoth;
 using Thoth.Types.Thoth.Data;
 
 namespace Thoth.Resources.Json
 {
     internal class ThothDeck : IThothDeck
     {
-        private readonly Dictionary<MajorArcana, IArchetype> majorArcanaCache = new();
+        private readonly Dictionary<Enum, IArchetype> arcanaCache = new();
 
-        public IArchetype GetMajorArcanaByIndex(int arcanaNumeric)
+        private const string MajorArcanaPath = "Data/Thoth_MajorArcana";
+        private const string MinorArcanaPath = "Data/Thoth_MinorArcana";
+
+        public IArchetype FetchMajorArcana(int arcanaNumeric)
         {
             IArchetype arcanaArchetype;
             MajorArcana arcanaIdentity;
@@ -23,47 +24,59 @@ namespace Thoth.Resources.Json
                 (MajorArcana)arcanaNumeric :
                 throw new ArgumentOutOfRangeException($"{nameof(arcanaNumeric)} was not a digit listed within {nameof(MajorArcana)}!");
 
-            arcanaArchetype = GetCachedOrGenerate(arcanaIdentity);
+            arcanaArchetype = GetCachedOrGenerate(arcanaIdentity, MajorArcanaPath);
 
             return arcanaArchetype;
         }
 
-        public IArcana GrabMinorArcanaByIndexAndSuit(int index, MinorArcanaSuit suit)
+        public IArchetype FetchMinorArcana(MinorArcanaAddedToOffset arcanaReference)
+            => GetCachedOrGenerate(arcanaReference, MinorArcanaPath);
+
+        public IArchetype FetchMinorArcana(MinorArcanaAddedToOffset suitOffset, int cardNumber)
         {
-            //Note: Remember to make this Fool-Safe, too!
-            throw new NotImplementedException();
+            MinorArcanaAddedToOffset arcanaIdentity;
+
+            // Check whether the given input parameter numeric is valid.
+            int arcanaEnumIndex = (int)suitOffset + cardNumber;
+
+            arcanaIdentity = Enum.IsDefined(typeof(MinorArcanaAddedToOffset), arcanaEnumIndex) ?
+                (MinorArcanaAddedToOffset)arcanaEnumIndex :
+                throw new ArgumentOutOfRangeException($"{nameof(arcanaEnumIndex)} was not a digit listed within {nameof(MinorArcanaAddedToOffset)} when added to this offset! Ensure that the suitOffset added to the cardNumber does indeed match a given card's index within the Enum!");
+
+            return FetchMinorArcana(arcanaIdentity);
         }
 
+
         /// <summary> Get the cached archetype or generate it if was not already present. </summary>
-        private IArchetype GetCachedOrGenerate(MajorArcana arcanaIdentity)
+        private IArchetype GetCachedOrGenerate<T>(T arcanaIdentity, string filePath) where T : Enum
         {
             IArchetype? arcanaArchetype;
 
-            if (!majorArcanaCache.TryGetValue(arcanaIdentity, out arcanaArchetype))
+            if (!arcanaCache.TryGetValue(arcanaIdentity, out arcanaArchetype))
             {
-                arcanaArchetype = DeserializeMajorArcana(arcanaIdentity);
-                majorArcanaCache[arcanaIdentity] = arcanaArchetype;
+                arcanaArchetype = DeserializeArcana(arcanaIdentity, filePath);
+                arcanaCache[arcanaIdentity] = arcanaArchetype;
             }
 
             return arcanaArchetype;
         }
 
         /// <summary> Perform the actual deserialization of an arcana. </summary>
-        private IArchetype DeserializeMajorArcana(MajorArcana arcanaIdentity)
+        private IArchetype DeserializeArcana<T>(T arcanaIdentity, string rootPath) where T : Enum
         {
-            string targetPrefix = ((int)arcanaIdentity).ToString();
-            string filePath = $"Data/Thoth_MajorArcana/{targetPrefix}_{arcanaIdentity.ToString()}.json";
+            string targetPrefix = Convert.ToInt32(arcanaIdentity).ToString();
+            string filePath = $"{rootPath}/{targetPrefix}_{arcanaIdentity.ToString()}.json";
             string arcanaJson;
             IArchetype? arcanaArchetype;
 
             if (!File.Exists(filePath))
-                throw new FileNotFoundException($"Arcana file not found: {filePath}");
+                throw new FileNotFoundException($"Major Arcana file not found: {filePath}");
 
             arcanaJson = File.ReadAllText(filePath);
             arcanaArchetype = JsonSerializer.Deserialize<Archetype>(arcanaJson);
 
             if (arcanaArchetype is null)
-                throw new JsonException($"Failed to deserialize arcana from {filePath}");
+                throw new JsonException($"Failed to deserialize major arcana from {filePath}");
 
             return arcanaArchetype;
         }

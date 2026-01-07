@@ -1,7 +1,7 @@
 ﻿using Thoth.Types.Alchemy;
 using Thoth.Types.Zodiacal;
 
-namespace Thoth.Types.Thoth.CardDataStructure
+namespace Thoth.Types.Thoth
 {
     internal readonly record struct Archetype : IArchetype
     {

@@ -11,11 +11,10 @@ namespace Thoth.External.Types
     public sealed class Practitioner : IPractitionerService
     {     
         private static readonly IAstrologicalCalculator astrologicalCalculator = new AstrologicalCalculator();
-        private static readonly IThothCalculator thothCalculator = new ThothCalculator();
-        private static readonly IThothDeck cardBuilder = new ThothDeck();
-        private static readonly ITransliterator transliterator = new Transliterator();
         private static readonly IGemetriaCalculator gemetriaCalculator = new GemetriaCalculator();
-        private static readonly ICardProvider cardFetcher = new CardProvider(thothCalculator, cardBuilder, transliterator, gemetriaCalculator, astrologicalCalculator);
+        private static readonly IThothDeck cardBuilder = new ThothDeck();
+        private static readonly IThothCalculator thothCalculator = new ThothCalculator(cardBuilder);
+        private static readonly ICardProvider cardFetcher = new CardProvider(thothCalculator, cardBuilder, gemetriaCalculator, astrologicalCalculator);
 
         private readonly IThelemite currentPractitioner;
 

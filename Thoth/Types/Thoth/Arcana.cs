@@ -1,6 +1,6 @@
 ﻿using Thoth.Types.Thoth.Data;
 
-namespace Thoth.Types.Thoth.CardDataStructure
+namespace Thoth.Types.Thoth
 {
     internal readonly record struct Arcana : IArcana
     {

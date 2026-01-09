@@ -4,5 +4,6 @@
     {
         ArcanaRole Role { get; }
         string Name { get; }
+        int Number { get; }
     }
 }

@@ -14,6 +14,7 @@ namespace Thoth
 
             var practitioner = Practitioner.Create();
             ImmutableArray<IArcanaCard> personalityCards;
+            ImmutableArray<IArcanaCard> zodiacalSunCards;
             ImmutableArray<IArcanaCard> nameCards = [];
             var birthDate = ReadBirthDate();
 
@@ -25,7 +26,12 @@ namespace Thoth
             personalityCards = practitioner.GetPersonalityCards();
             //nameCards = practitioner.GetNameCards();
 
-            PrintCardsToConsole(personalityCards, nameCards);
+            zodiacalSunCards = practitioner.GetCorrespondenceCards()
+               .Where(i => i.Role == CorrespondenceOption.ZodiacalSun)
+                .SelectMany(i => ImmutableArray.Create(i.Court, i.Decan, i.Zodiac))
+                .ToImmutableArray();
+
+            PrintCardsToConsole(personalityCards, nameCards, zodiacalSunCards);
 
             // Optionally, check whether the date of birth was sufficient on its own to get an accurate zodiacal sun sign.
             PerformCuspCheck(practitioner, birthDate);
@@ -84,10 +90,19 @@ namespace Thoth
             {
                 foreach (IArcanaCard card in set)
                 {
-                    Console.WriteLine("\n ----------------- \n");
-                    Console.WriteLine("I present your: ", card.Role.ToString());
-                    Console.WriteLine($"\t{card.Name.ToString()}");
-                    Console.WriteLine("\n ----------------- \n");
+                    Console.WriteLine($"""
+                        
+                         ----------------- 
+                        
+                        I present your: 
+                        	{card.Role.ToString()}
+
+                        Introducing: 
+                          {card.Number} - {card.Name.ToString()}
+                        
+                         ----------------- 
+                        
+                        """);
                 }
             }
         }

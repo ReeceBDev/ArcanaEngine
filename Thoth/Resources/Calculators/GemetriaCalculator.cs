@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using Thoth.Types.Transliteration;
 
 namespace Thoth.Resources.Calculators
@@ -6,51 +7,61 @@ namespace Thoth.Resources.Calculators
     internal class GemetriaCalculator : IGemetriaCalculator
     {
         /// <summary> Attempts to perform numerology on latin names by casting their literal characters to hebrew apiece. This is an accepted practice, but not necessarily wholly accurate... </summary>
-        public int GetGemetriaHebrewAppromimation(string name)
+        public int GetGemetriaHebrewAppromimation(string rawName)
         {
-            if (name is null)
-                throw new ArgumentNullException("name");
+            if (rawName is null)
+                throw new ArgumentNullException(nameof(rawName));
 
-            int outputNumbers;
-            string assembledNumbers;
-            StringBuilder sb = new();
+            List<int> gemetriaValues = [];
+            string name = rawName.ToUpperInvariant();
 
-            //First extract the double-letter combinations, in their proper order...
+
+            // Extract the double-letter and remaining single-letter combinations, in their proper order...
             for (int i = 0; i < name.Length; i++)
             {
                 string testLetters;
                 char currentLetter = name[i];
                 char? additionalLetter = null;
+                int gemetriac;
 
-                bool hasMoreThanOneLetter = name.Length > 1;
-                bool hasExtraLetters = (name.Length - 1) >= i;
+                bool hasExtraLetters = (i + 1) < name.Length;
 
-                //Extract the additional letter if there are enough remaining
-                if (hasExtraLetters && hasMoreThanOneLetter)
+                //Extract the additional letter when there are enough remaining
+                if (hasExtraLetters)
                 {
                     additionalLetter = name[i + 1];
                 }
 
-                testLetters = additionalLetter is null ? $"{currentLetter}" : $"{currentLetter + additionalLetter}";
+                testLetters = additionalLetter is null ? $"{currentLetter}" : $"{currentLetter}{additionalLetter}";
 
-                //Check the extracted letters
+                //Convert the extracted letters to numerics
                 if (Enum.IsDefined(typeof(LatinToHebrewNumerologyApproximations), testLetters))
                 {
-                    sb.Append(testLetters);
+                    //Handle two valid letters, when merged into one applicable grouping
+                    gemetriac = (int)Enum.Parse<LatinToHebrewNumerologyApproximations>(testLetters);
+                }
+                else if (Enum.IsDefined(typeof(LatinToHebrewNumerologyApproximations), testLetters[0].ToString()))
+                {
+                    //Handle just one valid letter
+                    gemetriac = (int)Enum.Parse<LatinToHebrewNumerologyApproximations>([testLetters[0]]);
+                }
+                else 
+                {
+                    //Handle no valid letters
+                    throw new ArgumentException($"Character '{i}' has no Hebrew gematria mapping.", nameof(name));
+                }
 
-                    //Skip an additional letter when we had two which tested true at once.
-                    if (testLetters.Length > 1)
-                    {
-                        i++;
-                    }
+                gemetriaValues.Add(gemetriac);
+
+                //Skip an additional letter when we had two which tested true at once.
+                if (testLetters.Length > 1)
+                {
+                    i++;
                 }
             }
 
-            assembledNumbers = sb.ToString();
-            outputNumbers = int.Parse(assembledNumbers);
-
-            return outputNumbers;
+            // Add the values together
+            return gemetriaValues.Sum();
         }
-
     }
 }

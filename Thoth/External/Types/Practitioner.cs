@@ -51,6 +51,13 @@ namespace Thoth.External.Types
         /// <summary> Sets the practitioner's name. Allows Name Cards to be drawn. </summary>
         public IPractitioner SetName(string rawName)
         {
+            //Instructional errors for teaching users how to use this API correctly.
+            if (rawName.Contains('c', StringComparison.CurrentCultureIgnoreCase))
+                throw new Exception($"In order for a name to be converted to hebrew, it may not contain the letter C. " +
+                    $"Instead, it should be S denoting softness, or K denoting hardness, in its place." +
+                    $"You should handle input data to ensure that the user has selected S or K depending on the pronunciative objective 'hardness' of each letter 'C' in their name." +
+                    $"For example, 'Cat' would use a 'hard' C and subsequently become 'K' - whereas 'Spice' would use a 'soft' C, becoming 'S'.");
+
             string cleanName = TextUtilities.SanitizeInput(rawName);
             currentPractitioner.SetName(cleanName);
 

@@ -6,8 +6,8 @@
         HardSoftConflictError = 404,
         A = 1,
         B = 2,
-        C = 404, // HardSoftConflictError = must be handled correctly! This must become either Z or K.
-        Ch = 8, // Yes, there are double letters, just to spice things up even further!
+        // There is no C. These must have been input as either either Z or K.
+        CH = 8, // Yes, there are double letters, just to spice things up even further!
         D = 4,
         E = 5,
         F = 80,
@@ -22,11 +22,11 @@
         O = 70,
         P = 80,
         Q = 100,
-        Qu = (K + W),
+        QU = (K + W),
         R = 200,
         S = 60,
-        Sh = 300,
-        Th = 400,
+        SH = 300,
+        TH = 400,
         T = 9,
         U = 6,
         V = 6,

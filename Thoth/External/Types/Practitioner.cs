@@ -8,8 +8,8 @@ using Thoth.Types.Practitioner;
 
 namespace Thoth.External.Types
 {
-    public sealed class Practitioner : IPractitionerService
-    {     
+    public sealed class Practitioner : IPractitioner
+    {
         private static readonly IAstrologicalCalculator astrologicalCalculator = new AstrologicalCalculator();
         private static readonly IGemetriaCalculator gemetriaCalculator = new GemetriaCalculator();
         private static readonly IThothDeck cardBuilder = new ThothDeck();
@@ -20,36 +20,36 @@ namespace Thoth.External.Types
 
 
         /// <summary> Returns an empty practitioner. The practitioner's name or birthdate must be set before values can be pulled. </summary>
-        public static IPractitionerService Empty { get => new Practitioner(new Thelemite(cardFetcher, astrologicalCalculator, thothCalculator)); }
-        
+        public static IPractitioner Empty { get => new Practitioner(new Thelemite(cardFetcher, astrologicalCalculator, thothCalculator)); }
+
         private Practitioner(IThelemite setPractitioner)
         {
             currentPractitioner = setPractitioner;
         }
 
         /// <summary> Returns an empty practitioner. The practitioner's name or birthdate must be set before values can be pulled. </summary>
-        public static IPractitionerService Create()
+        public static IPractitioner Create()
             => Practitioner.Empty;
 
         /// <summary> Returns a practitioner with their name set. This allows Name Cards to be pulled. </summary>
-        public static IPractitionerService Create(string rawName)
+        public static IPractitioner Create(string rawName)
             => Practitioner.Create().SetName(rawName);
 
         /// <summary> Returns a practitioner with their birth date set. This allows Personality Cards and the Sun Sign from Correspondence Cards to be pulled. </summary>
-        public static IPractitionerService Create(DateTime birthDate)
+        public static IPractitioner Create(DateTime birthDate)
             => Practitioner.Create().SetBirthdate(birthDate);
 
         /// <summary> Returns a practitioner with their name and birth date set. This allows Name Cards, Personality Cards and the Sun Sign from Correspondence Cards to be pulled. </summary>
-        public static IPractitionerService Create(string rawName, DateTime birthDate)
+        public static IPractitioner Create(string rawName, DateTime birthDate)
             => Practitioner.Create(rawName).SetBirthdate(birthDate);
 
         /// <summary> Returns a fully initiailised practitioner. This allows all cards to be pulled. </summary>
-        public static IPractitionerService Create(string rawName, DateTime birthDate, double latitude, double longitude)
+        public static IPractitioner Create(string rawName, DateTime birthDate, double latitude, double longitude)
             => Practitioner.Create(rawName, birthDate).SetLocation(latitude, longitude);
 
 
         /// <summary> Sets the practitioner's name. Allows Name Cards to be drawn. </summary>
-        public IPractitionerService SetName(string rawName)
+        public IPractitioner SetName(string rawName)
         {
             string cleanName = TextUtilities.SanitizeInput(rawName);
             currentPractitioner.SetName(cleanName);
@@ -59,7 +59,7 @@ namespace Thoth.External.Types
         }
 
         /// <summary> Sets the practitioner's birth date. Allows Personality Cards to be drawn, along with the Zodiacal Sun Correspondence Card. </summary>
-        public IPractitionerService SetBirthdate(DateTime birthDate)
+        public IPractitioner SetBirthdate(DateTime birthDate)
         {
             currentPractitioner.SetDateOfBirth(birthDate);
 
@@ -68,7 +68,7 @@ namespace Thoth.External.Types
         }
 
         /// <summary> Sets the practitioner's exact birth time. This must adhere to its correct timezone. Allows most Correspondence Cards to be drawn. </summary>
-        public IPractitionerService SetBirthTime(DateTimeOffset birthTime)
+        public IPractitioner SetBirthTime(DateTimeOffset birthTime)
         {
             currentPractitioner.SetTimeOfBirth(birthTime);
 
@@ -78,7 +78,7 @@ namespace Thoth.External.Types
 
 
         /// <summary> Sets the practitioner's location of their nativety. When set alongside an exact time of birth, allows drawing Ascendant Cards. </summary>
-        public IPractitionerService SetLocation(double latitude, double longitude)
+        public IPractitioner SetLocation(double latitude, double longitude)
         {
             currentPractitioner.SetLocation(latitude, longitude);
 
@@ -171,7 +171,7 @@ namespace Thoth.External.Types
                 //Select and aggregate valid cards on a case by case basis.
                 for (int i = earliestYear; i <= latestYear; i++)
                 {
-                    var growthCard = cardFetcher.GetGrowthCardByYear(i, (DateTime) nativetyDate);
+                    var growthCard = cardFetcher.GetGrowthCardByYear(i, (DateTime)nativetyDate);
                     aggregatedCards.Add(new ArcanaCard(growthCard, ArcanaRole.GrowthCard));
                 }
 
@@ -181,8 +181,8 @@ namespace Thoth.External.Types
 
         /// <summary> Retrieves the practitioner's Zodiacal Cards. For the primary zodiacal Sun Sign, only the practitioner's birth date must have been set.
         /// For all of the possible relevant correspondence cards, both the practitioner's timezone and birth date must have been set. </summary>
-        public ImmutableArray<ICorrespondenceKey> GetCorrespondenceCards()
-        {   
+        public ImmutableArray<ICorrespondence> GetCorrespondenceCards()
+        {
             if (currentPractitioner.CelestialWheel is null)
             {
                 if (currentPractitioner.DateOfBirth is null)
@@ -191,8 +191,8 @@ namespace Thoth.External.Types
                 return [];
             }
 
-            ImmutableArray<ICorrespondenceKey> output;
-            List<ICorrespondenceKey> aggregatedCards = [];
+            ImmutableArray<ICorrespondence> output;
+            List<ICorrespondence> aggregatedCards = [];
 
             var zodiacalSunKey = currentPractitioner.CelestialWheel?.ZodiacalSunSign;
             var risingSunKey = currentPractitioner.CelestialWheel?.RisingSunSign;
@@ -204,17 +204,23 @@ namespace Thoth.External.Types
 
 
             //Select and aggregate valid cards on a case by case basis.
-            if (zodiacalSunKey is not null) { aggregatedCards.Add(new CorrespondenceKey(zodiacalSunKey, CorrespondenceKeyOption.ZodiacalSun)); }
-            if (risingSunKey is not null) { aggregatedCards.Add(new CorrespondenceKey(risingSunKey, CorrespondenceKeyOption.RisingSun)); }
-            if (moonKey is not null) { aggregatedCards.Add(new CorrespondenceKey(moonKey, CorrespondenceKeyOption.Moon)); }
-            if (mercuryKey is not null) { aggregatedCards.Add(new CorrespondenceKey(mercuryKey, CorrespondenceKeyOption.Mercury)); }
-            if (venusKey is not null) { aggregatedCards.Add(new CorrespondenceKey(venusKey, CorrespondenceKeyOption.Venus)); }
-            if (jupiterKey is not null) { aggregatedCards.Add(new CorrespondenceKey(jupiterKey, CorrespondenceKeyOption.Jupiter)); }
-            if (saturnKey is not null) { aggregatedCards.Add(new CorrespondenceKey(saturnKey, CorrespondenceKeyOption.Saturn)); }
+            if (zodiacalSunKey is not null) { aggregatedCards.Add(new Correspondence(zodiacalSunKey, CorrespondenceOption.ZodiacalSun)); }
+            if (risingSunKey is not null) { aggregatedCards.Add(new Correspondence(risingSunKey, CorrespondenceOption.RisingSun)); }
+            if (moonKey is not null) { aggregatedCards.Add(new Correspondence(moonKey, CorrespondenceOption.Moon)); }
+            if (mercuryKey is not null) { aggregatedCards.Add(new Correspondence(mercuryKey, CorrespondenceOption.Mercury)); }
+            if (venusKey is not null) { aggregatedCards.Add(new Correspondence(venusKey, CorrespondenceOption.Venus)); }
+            if (jupiterKey is not null) { aggregatedCards.Add(new Correspondence(jupiterKey, CorrespondenceOption.Jupiter)); }
+            if (saturnKey is not null) { aggregatedCards.Add(new Correspondence(saturnKey, CorrespondenceOption.Saturn)); }
 
 
             output = [.. aggregatedCards];
             return output;
+        }
+
+        public bool CheckWhetherZodiacalSunIsAccurate(DateTime birthDate)
+        {
+            SetBirthdate(birthDate);
+            return astrologicalCalculator.CheckIfNearCusp(birthDate);
         }
     }
 }

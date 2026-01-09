@@ -1,7 +1,7 @@
-﻿using Thoth.Types.Thoth;
-using Thoth.Types.Zodiacal;
-using Thoth.Managers;
+﻿using Thoth.Managers;
 using Thoth.Resources.Calculators;
+using Thoth.Types.Thoth;
+using Thoth.Types.Zodiacal;
 
 namespace Thoth.Types.Practitioner
 {
@@ -83,15 +83,16 @@ namespace Thoth.Types.Practitioner
             if (!dateOfBirth.HasValue)
                 throw new InvalidOperationException($"{nameof(dateOfBirth)} was null! Cannot generate sun sign.");
 
-            IEclipticDegree absoluteDegree;
+            IEclipticDegree? absoluteDegree;
 
             // Try to generate the most accurate celestial degree we have available for the sun sign
-            absoluteDegree = birthTime.HasValue ? 
-                absoluteDegree = astrologicalCalculator.GetCelestialPositionByTime(CelestialBody.Sun, birthTime.Value) :
-                absoluteDegree = astrologicalCalculator.GetZodiacalSunDegree(dateOfBirth.Value);
+            absoluteDegree = birthTime.HasValue ?
+                astrologicalCalculator.GetCelestialPositionByTime(CelestialBody.Sun, birthTime.Value) :
+                astrologicalCalculator.ApproximateZodiacalSun(dateOfBirth.Value);
 
             return new ZodiacalCorrespondence(cardFetcher, absoluteDegree);
         }
+
 
         private IZodiacalArcanaCorrespondence GenerateSignByTime(CelestialBody body)
         {

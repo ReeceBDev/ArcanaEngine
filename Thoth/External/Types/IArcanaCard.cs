@@ -3,5 +3,6 @@
     public interface IArcanaCard
     {
         ArcanaRole Role { get; }
+        string Name { get; }
     }
 }

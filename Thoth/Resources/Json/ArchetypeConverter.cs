@@ -15,8 +15,7 @@ namespace Thoth.Resources.Json
             JsonElement root = doc.RootElement;
 
             // Deserialize nested types as concrete implementations of their interfaces
-            Arcana? arcana = JsonSerializer.Deserialize<Arcana>(root.GetProperty("Arcana").GetRawText(), options);
-            // Note: Add future types here... No need to validate like the arcana below, as only arcana is truly required...
+            Arcana? arcana = JsonSerializer.Deserialize<Arcana>(root.GetProperty("Arcana").GetRawText(), options);            
 
             // Validate whether arcana has been set correctly.
             if (arcana is null)
@@ -25,13 +24,13 @@ namespace Thoth.Resources.Json
             // Deserialize implicitly concrete types (enums)
             AlchemicalElement? element = DeserializeNullableProperty<AlchemicalElement>(root, "Element", options);
             AstrologicalMode? mode = DeserializeNullableProperty<AstrologicalMode>(root, "Mode", options);
-            EclipticZodiac? zodiac = DeserializeNullableProperty<EclipticZodiac>(root, "Zodiac", options);
+            ZodiacSign? zodiac = DeserializeNullableProperty<ZodiacSign>(root, "Zodiac", options);
 
 
             // Combine all realized data structures together into the whole and final type
             archetype = new Archetype
             {
-                Arcana = arcana, 
+                Arcana = arcana,
                 Element = element,
                 Mode = mode,
                 Zodiac = zodiac

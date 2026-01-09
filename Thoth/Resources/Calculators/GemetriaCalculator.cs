@@ -51,6 +51,6 @@ namespace Thoth.Resources.Calculators
 
             return outputNumbers;
         }
-            
+
     }
 }

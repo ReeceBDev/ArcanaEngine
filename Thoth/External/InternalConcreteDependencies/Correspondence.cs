@@ -4,10 +4,10 @@ using Thoth.Types.Thoth;
 namespace Thoth.External.InternalConcreteDependencies
 {
     /// <summary> A set of Arcana which relate to a Zodiacal correspondence upon a practitioner's natevity. </summary>
-    internal sealed class CorrespondenceKey : ICorrespondenceKey
+    internal sealed class Correspondence : ICorrespondence
     {
         /// <summary> The target of this correspondence, i.e. The rising sun, Mars, Venus, etc. </summary>
-        public CorrespondenceKeyOption Role { get; }
+        public CorrespondenceOption Role { get; }
 
         /// <summary> The Major Arcana card which relates to this correspondence's Zodiac, and its archetypical relationships. </summary>
         public IArcanaCard Zodiac { get; }
@@ -18,7 +18,7 @@ namespace Thoth.External.InternalConcreteDependencies
         /// <summary> The Court card which relates to this correspondence, and its archetypical relationships. </summary>
         public IArcanaCard Court { get; }
 
-        public CorrespondenceKey(IZodiacalArcanaCorrespondence correspondenceInput, CorrespondenceKeyOption correspondenceType)
+        public Correspondence(IZodiacalArcanaCorrespondence correspondenceInput, CorrespondenceOption correspondenceType)
         {
             Role = correspondenceType;
 

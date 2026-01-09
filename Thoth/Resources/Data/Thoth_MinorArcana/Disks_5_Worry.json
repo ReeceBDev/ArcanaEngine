@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Disks",
+    "Number": 5,
+    "Name": "Worry",
+    "ShortDescription": "Worry, Material trouble, Destitution"
+  },
+  "Zodiac": "Taurus",
+  "Element": "Earth",
+  "Mode": "Fixed"
+}

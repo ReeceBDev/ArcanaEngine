@@ -1,5 +1,4 @@
 ﻿using Thoth.Resources.Json;
-using Thoth.Types.Thoth;
 using Thoth.Types.Thoth.Data;
 using Thoth.Types.Zodiacal;
 
@@ -16,7 +15,8 @@ namespace Thoth.Resources.Calculators
 
 
         public int CalculateGrowthOffset(DateTime nativety, int targetYear)
-        {;
+        {
+            ;
             int birthDate = nativety.Day;
             int birthMonth = nativety.Month;
             int baseSum = birthDate + birthMonth + targetYear;
@@ -50,7 +50,7 @@ namespace Thoth.Resources.Calculators
             return calculatedValue;
         }
 
-        public MajorArcana GetMajorArcanaByZodiac(EclipticZodiac zodiac)
+        public MajorArcana GetMajorArcanaByZodiac(ZodiacSign zodiac)
             => ArcanaToZodiacMapping.EclipticToArcana[zodiac];
 
         public MinorArcanaAddedToOffset GetDecanCardByAbsoluteDegree(int absoluteDegree)

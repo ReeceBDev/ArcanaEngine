@@ -35,7 +35,7 @@ namespace Thoth.Types.Practitioner
 
         public void SetFullNameArcana(string fullName)
             => FullNameArcana = ValidateAndGetArcana(fullName);
-        
+
         public void SetMiddleNameArcanas(ImmutableArray<string> middleNames)
         {
             if (middleNames.IsDefaultOrEmpty)

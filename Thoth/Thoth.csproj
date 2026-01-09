@@ -8,4 +8,326 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\Data\Thoth_MajorArcana\00_TheFool.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\01_TheMagus.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\02_TheHighPriestess.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\03_TheEmpress.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\04_TheEmperor.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\05_TheHierophant.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\06_TheLovers.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\07_TheChariot.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\08_Adjustment.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\09_TheHermit.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\10_Fortune.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\11_Lust.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\12_TheHangedMan.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\13_Death.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\14_Art.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\15_TheDevil.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\16_TheTower.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\17_TheStar.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\18_TheMoon.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\19_TheSun.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\20_TheAeon.json" />
+    <None Remove="Resources\Data\Thoth_MajorArcana\21_TheUniverse.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_10_Satiety.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_11_PrincessofCups.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_12_PrinceofCups.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_13_QueenofCups.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_14_KnightofCups.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_1_AceOfCups.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_2_Love.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_3_Abundance.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_4_Luxury.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_5_Disappointment.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_6_Pleasure.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_7_Debauch.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_8_Indolence.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Cups_9_Happiness.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_10_Wealth.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_11_PrincessofDisks.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_12_PrinceofDisks.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_13_QueenofDisks.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_14_KnightofDisks.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_1_AceofDisks.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_2_Change.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_3_Works.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_4_Power.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_5_Worry.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_6_Success.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_7_Failure.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_8_Prudence.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Disks_9_Gain.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_10_Ruin.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_11_PrincessOfSwords.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_12_PrinceofSwords.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_13_QueenofSwords.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_14_KnightofSwords.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_1_AceOfSwords.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_2_Peace.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_3_Sorrow.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_4_Truce.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_5_Defeat.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_6_Science.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_7_Futility.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_8_Interference.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Swords_9_Cruelty.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_10_Oppression.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_11_PrincessofWands.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_12_PrinceofWands.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_13_QueenofWands.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_14_KnightofWands.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_1_AceofWands.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_2_Dominion.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_3_Virtue.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_4_Completion.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_5_Strife.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_6_Victory.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_7_Valour.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_8_Swiftness.json" />
+    <None Remove="Resources\Data\Thoth_MinorArcana\Wands_9_Strength.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Data\Thoth_MajorArcana\00_TheFool.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\01_TheMagus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\02_TheHighPriestess.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\03_TheEmpress.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\04_TheEmperor.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\05_TheHierophant.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\06_TheLovers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\07_TheChariot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\08_Adjustment.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\09_TheHermit.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\10_Fortune.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\11_Lust.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\12_TheHangedMan.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\13_Death.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\14_Art.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\15_TheDevil.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\16_TheTower.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\17_TheStar.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\18_TheMoon.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\19_TheSun.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\20_TheAeon.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MajorArcana\21_TheUniverse.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_10_Satiety.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_11_PrincessofCups.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_12_PrinceofCups.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_13_QueenofCups.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_14_KnightofCups.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_1_AceOfCups.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_2_Love.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_3_Abundance.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_4_Luxury.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_5_Disappointment.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_6_Pleasure.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_7_Debauch.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_8_Indolence.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Cups_9_Happiness.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_10_Wealth.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_11_PrincessofDisks.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_12_PrinceofDisks.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_13_QueenofDisks.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_14_KnightofDisks.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_1_AceofDisks.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_2_Change.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_3_Works.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_4_Power.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_5_Worry.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_6_Success.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_7_Failure.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_8_Prudence.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Disks_9_Gain.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_10_Ruin.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_11_PrincessOfSwords.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_12_PrinceofSwords.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_13_QueenofSwords.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_14_KnightofSwords.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_1_AceOfSwords.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_2_Peace.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_3_Sorrow.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_4_Truce.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_5_Defeat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_6_Science.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_7_Futility.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_8_Interference.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Swords_9_Cruelty.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_10_Oppression.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_11_PrincessofWands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_12_PrinceofWands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_13_QueenofWands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_14_KnightofWands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_1_AceofWands.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_2_Dominion.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_3_Virtue.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_4_Completion.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_5_Strife.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_6_Victory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_7_Valour.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_8_Swiftness.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Data\Thoth_MinorArcana\Wands_9_Strength.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SwissEphNet" Version="2.8.0.2" />
+  </ItemGroup>
+
 </Project>

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Immutable;
-using Thoth.Types.Transliteration;
 using Thoth.Managers;
 using Thoth.Resources;
 using Thoth.Resources.Calculators;
 using Thoth.Types.Thoth;
+using Thoth.Types.Transliteration;
 
 namespace Thoth.Types.Practitioner
 {

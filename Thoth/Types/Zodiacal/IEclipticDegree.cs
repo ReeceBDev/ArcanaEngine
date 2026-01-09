@@ -6,7 +6,7 @@
     internal interface IEclipticDegree
     {
         /// <summary> The zodiac sign (Aries, Taurus, etc.) </summary>
-        EclipticZodiac Sign { get; }
+        ZodiacSign Sign { get; }
 
         /// <summary> The degree within the sign (0-29) </summary>
         int RelativeDegree { get; }

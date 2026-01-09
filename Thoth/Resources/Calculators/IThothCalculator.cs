@@ -1,5 +1,4 @@
-﻿using Thoth.Types.Thoth;
-using Thoth.Types.Thoth.Data;
+﻿using Thoth.Types.Thoth.Data;
 using Thoth.Types.Zodiacal;
 
 namespace Thoth.Resources.Calculators
@@ -8,7 +7,7 @@ namespace Thoth.Resources.Calculators
     {
         int CalculateGrowthOffset(DateTime birthDate, int targetYear);
         int CalculateCrossSum(int number);
-        MajorArcana GetMajorArcanaByZodiac(EclipticZodiac zodiac);
+        MajorArcana GetMajorArcanaByZodiac(ZodiacSign zodiac);
         MinorArcanaAddedToOffset GetDecanCardByAbsoluteDegree(int absoluteDegree);
         MinorArcanaAddedToOffset GetCourtCardByAbsoluteDegree(int absoluteDegree);
     }

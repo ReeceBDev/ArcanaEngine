@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Text.RegularExpressions;
+using Thoth.External;
 using Thoth.External.Types;
 using Thoth.Resources;
 
@@ -13,20 +14,23 @@ namespace Thoth
 
             var practitioner = Practitioner.Create();
             ImmutableArray<IArcanaCard> personalityCards;
-            ImmutableArray<IArcanaCard> nameCards;
+            ImmutableArray<IArcanaCard> nameCards = [];
+            var birthDate = ReadBirthDate();
 
+            // Set practitioner up. Only birth-date is necessary, the rest are optional.
+            practitioner.SetBirthdate(birthDate);
+            //practitioner.SetName(ReadName());
 
-            practitioner.SetBirthdate(ReadBirthDate());
-            practitioner.SetName(ReadName());
-
-
+            // Get and display cards
             personalityCards = practitioner.GetPersonalityCards();
-            nameCards = practitioner.GetNameCards();
+            //nameCards = practitioner.GetNameCards();
 
             PrintCardsToConsole(personalityCards, nameCards);
 
+            // Optionally, check whether the date of birth was sufficient on its own to get an accurate zodiacal sun sign.
+            PerformCuspCheck(practitioner, birthDate);
 
-            Console.WriteLine("Finished all operations.");
+            Console.WriteLine("\n\nFinished all operations.");
             PauseConsole();
         }
 
@@ -42,7 +46,7 @@ namespace Thoth
 
             while (!validBirthDate.IsMatch(rawBirthDate))
             {
-                Console.WriteLine("Enter Birthdate dd/mm/yyyy");
+                Console.WriteLine("\nEnter Birthdate dd/mm/yyyy");
                 rawBirthDate = Console.ReadLine() ?? string.Empty;
             }
 
@@ -62,9 +66,9 @@ namespace Thoth
             string output;
             string fullName = string.Empty;
 
-            while (fullName != string.Empty)
+            while (fullName == string.Empty)
             {
-                Console.WriteLine("Enter Birthdate dd/mm/yyyy");
+                Console.WriteLine("\nEnter Full Name (First) (Middle) (etc.)");
                 fullName = Console.ReadLine() ?? string.Empty;
             }
 
@@ -74,12 +78,32 @@ namespace Thoth
 
         static void PrintCardsToConsole(params ImmutableArray<IArcanaCard>[] setsOfCards)
         {
+            Console.WriteLine("\n\nCards: \n");
+
             foreach (ImmutableArray<IArcanaCard> set in setsOfCards)
             {
                 foreach (IArcanaCard card in set)
                 {
-                    Console.WriteLine(card.Role.ToString());
+                    Console.WriteLine("\n ----------------- \n");
+                    Console.WriteLine("I present your: ", card.Role.ToString());
+                    Console.WriteLine($"\t{card.Name.ToString()}");
+                    Console.WriteLine("\n ----------------- \n");
                 }
+            }
+        }
+
+        static void PerformCuspCheck(IPractitioner practitioner, DateTime birthDate)
+        {
+            // Check that they are valid
+            if (!practitioner.CheckWhetherZodiacalSunIsAccurate(birthDate))
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+
+                Console.WriteLine("\n Warning: Your date of birth is near the cusp of a zodiacal change." +
+                    "\n Your birth-date cards have adjacent days with different results." +
+                    "\n Please enter your date of birth so that more accurate results will be obtained.");
+
+                Console.ForegroundColor = ConsoleColor.White;
             }
         }
 

@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Swords",
+    "Number": 4,
+    "Name": "Truce",
+    "ShortDescription": "Truce, Rest from strife, Recovery"
+  },
+  "Zodiac": "Libra",
+  "Element": "Air",
+  "Mode": "Cardinal"
+}

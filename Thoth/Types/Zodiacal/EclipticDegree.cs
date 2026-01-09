@@ -6,7 +6,7 @@
     internal readonly record struct EclipticDegree : IEclipticDegree
     {
         /// <summary> The zodiac sign (Aries, Taurus, etc.) </summary>
-        public EclipticZodiac Sign { get; init; }
+        public ZodiacSign Sign { get; init; }
 
         /// <summary> The relative degree within the zodiac sign (0-29) </summary>
         public int RelativeDegree { get; init; }
@@ -16,8 +16,8 @@
 
         static EclipticDegree()
         {
-            if (Enum.GetValues(typeof(EclipticZodiac)).Length != 12)
-                throw new Exception($"{nameof(EclipticZodiac)} does not contain twelve entries! There should only be twelve entries!");
+            if (Enum.GetValues(typeof(ZodiacSign)).Length != 12)
+                throw new Exception($"{nameof(ZodiacSign)} does not contain twelve entries! There should only be twelve entries!");
         }
 
         public EclipticDegree(int absoluteDegree)
@@ -27,7 +27,7 @@
 
             int signIndex = absoluteDegree / 30;
 
-            Sign = (EclipticZodiac) signIndex;
+            Sign = (ZodiacSign)signIndex;
             RelativeDegree = absoluteDegree % 30;
             AbsoluteDegree = absoluteDegree;
         }

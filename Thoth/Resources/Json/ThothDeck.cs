@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Thoth.Types.Thoth;
 using Thoth.Types.Thoth.Data;
 
@@ -8,8 +9,8 @@ namespace Thoth.Resources.Json
     {
         private readonly Dictionary<Enum, IArchetype> arcanaCache = new();
 
-        private const string MajorArcanaPath = "Data/Thoth_MajorArcana";
-        private const string MinorArcanaPath = "Data/Thoth_MinorArcana";
+        private const string MajorArcanaPath = "Resources/Data/Thoth_MajorArcana";
+        private const string MinorArcanaPath = "Resources/Data/Thoth_MinorArcana";
 
         public IArchetype FetchMajorArcana(int arcanaNumeric)
         {
@@ -64,16 +65,29 @@ namespace Thoth.Resources.Json
         /// <summary> Perform the actual deserialization of an arcana. </summary>
         private IArchetype DeserializeArcana<T>(T arcanaIdentity, string rootPath) where T : Enum
         {
-            string targetPrefix = Convert.ToInt32(arcanaIdentity).ToString();
-            string filePath = $"{rootPath}/{targetPrefix}_{arcanaIdentity.ToString()}.json";
+            string searchPattern = $"*_{arcanaIdentity.ToString()}.json";
+            string filePath;
             string arcanaJson;
             IArchetype? arcanaArchetype;
+            string[] matchingFiles = Directory.GetFiles(rootPath, searchPattern);
+
+            JsonSerializerOptions options = new();
+            options.Converters.Add(new ArchetypeConverter());
+            options.Converters.Add(new JsonStringEnumConverter());
+
+            // Obtain a single file with a name matching the given enum.
+            if (matchingFiles.Length > 1)
+                throw new InvalidOperationException($"Multiple files found matching pattern: {searchPattern}");
+
+            filePath = matchingFiles[0];
 
             if (!File.Exists(filePath))
                 throw new FileNotFoundException($"Major Arcana file not found: {filePath}");
 
+
+            // Deserialize the archetype from the file arcana data.
             arcanaJson = File.ReadAllText(filePath);
-            arcanaArchetype = JsonSerializer.Deserialize<Archetype>(arcanaJson);
+            arcanaArchetype = JsonSerializer.Deserialize<Archetype>(arcanaJson, options);
 
             if (arcanaArchetype is null)
                 throw new JsonException($"Failed to deserialize major arcana from {filePath}");

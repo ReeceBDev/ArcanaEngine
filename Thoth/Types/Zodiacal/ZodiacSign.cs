@@ -1,7 +1,7 @@
 ﻿namespace Thoth.Types.Zodiacal
 {
     /// <summary> The astrological signs of the zodiac. </summary>
-    internal enum EclipticZodiac
+    internal enum ZodiacSign
     {
         Aries = 0,
         Taurus = 1,

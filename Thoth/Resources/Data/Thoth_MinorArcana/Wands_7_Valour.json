@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Wands",
+    "Number": 7,
+    "Name": "Valour",
+    "ShortDescription": "Valour, Courage, Defense"
+  },
+  "Zodiac": "Leo",
+  "Element": "Fire",
+  "Mode": "Fixed"
+}

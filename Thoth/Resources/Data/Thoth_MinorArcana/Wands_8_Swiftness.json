@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Wands",
+    "Number": 8,
+    "Name": "Swiftness",
+    "ShortDescription": "Swiftness, Speed, Action"
+  },
+  "Zodiac": "Sagittarius",
+  "Element": "Fire",
+  "Mode": "Mutable"
+}

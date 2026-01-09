@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Disks",
+    "Number": 6,
+    "Name": "Success",
+    "ShortDescription": "Success, Material gain, Prosperity"
+  },
+  "Zodiac": "Taurus",
+  "Element": "Earth",
+  "Mode": "Fixed"
+}

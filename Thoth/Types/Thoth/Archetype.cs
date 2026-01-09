@@ -8,6 +8,6 @@ namespace Thoth.Types.Thoth
         public IArcana Arcana { get; init; }
         public AlchemicalElement? Element { get; init; }
         public AstrologicalMode? Mode { get; init; }
-        public EclipticZodiac? Zodiac { get; init; }
+        public ZodiacSign? Zodiac { get; init; }
     }
 }

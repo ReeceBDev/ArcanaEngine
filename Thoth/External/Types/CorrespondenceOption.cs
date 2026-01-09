@@ -1,6 +1,6 @@
 ﻿namespace Thoth.External.Types
 {
-    public enum CorrespondenceKeyOption
+    public enum CorrespondenceOption
     {
         ZodiacalSun,
         RisingSun,

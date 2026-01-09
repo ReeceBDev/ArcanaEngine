@@ -7,8 +7,8 @@ using Thoth.Types.Zodiacal;
 namespace Thoth.Managers
 {
     internal class CardProvider(
-        IThothCalculator thothCalculator, 
-        IThothDeck cardBuilder, 
+        IThothCalculator thothCalculator,
+        IThothDeck cardBuilder,
         IGemetriaCalculator gemetriaCalculator,
         IAstrologicalCalculator astrologicalCalculator)
         : ICardProvider
@@ -36,7 +36,7 @@ namespace Thoth.Managers
 
             return cardBuilder.FetchMajorArcana(nameCrossSum);
         }
-        
+
         public IArchetype? GetTeacherCard(DateTime birthDate)
         {
             int personalityCrossSum = CalculatePersonalitySum(birthDate);
@@ -52,11 +52,11 @@ namespace Thoth.Managers
             return cardBuilder.FetchMajorArcana(crossSum);
         }
 
-        public IArchetype GetZodiacCard(EclipticZodiac sign)
+        public IArchetype GetZodiacCard(ZodiacSign sign)
         {
             MajorArcana arcana = thothCalculator.GetMajorArcanaByZodiac(sign);
 
-            return cardBuilder.FetchMajorArcana((int) arcana);
+            return cardBuilder.FetchMajorArcana((int)arcana);
         }
 
         public IArchetype GetDecanCard(int absoluteDegree)
@@ -69,7 +69,7 @@ namespace Thoth.Managers
         public IArchetype GetCourtCard(int absoluteDegree)
         {
             MinorArcanaAddedToOffset minorArcana = thothCalculator.GetCourtCardByAbsoluteDegree(absoluteDegree);
-            
+
             return cardBuilder.FetchMinorArcana(minorArcana);
         }
 

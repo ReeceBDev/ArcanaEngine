@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using Thoth.Types.Zodiacal;
 
 namespace Thoth.Types.Thoth.Data
 {

@@ -5,24 +5,24 @@ namespace Thoth.Types.Thoth.Data
 {
     internal static class ArcanaToZodiacMapping
     {
-        private static readonly ImmutableDictionary<EclipticZodiac, MajorArcana> dataSource =
-            ImmutableDictionary.CreateRange(new KeyValuePair<EclipticZodiac, MajorArcana>[]
+        private static readonly ImmutableDictionary<ZodiacSign, MajorArcana> dataSource =
+            ImmutableDictionary.CreateRange(new KeyValuePair<ZodiacSign, MajorArcana>[]
             {
-                new(EclipticZodiac.Aries, MajorArcana.TheEmperor),
-                new(EclipticZodiac.Taurus, MajorArcana.TheHierophant),
-                new(EclipticZodiac.Gemini, MajorArcana.TheLovers),
-                new(EclipticZodiac.Cancer, MajorArcana.TheChariot),
-                new(EclipticZodiac.Leo, MajorArcana.Lust),
-                new(EclipticZodiac.Virgo, MajorArcana.TheHermit),
-                new(EclipticZodiac.Libra, MajorArcana.Adjustment),
-                new(EclipticZodiac.Scorpio, MajorArcana.Death),
-                new(EclipticZodiac.Sagittarius, MajorArcana.Art),
-                new(EclipticZodiac.Capricorn, MajorArcana.TheDevil),
-                new(EclipticZodiac.Aquarius, MajorArcana.TheStar),
-                new(EclipticZodiac.Pisces, MajorArcana.TheMoon)
+                new(ZodiacSign.Aries, MajorArcana.TheEmperor),
+                new(ZodiacSign.Taurus, MajorArcana.TheHierophant),
+                new(ZodiacSign.Gemini, MajorArcana.TheLovers),
+                new(ZodiacSign.Cancer, MajorArcana.TheChariot),
+                new(ZodiacSign.Leo, MajorArcana.Lust),
+                new(ZodiacSign.Virgo, MajorArcana.TheHermit),
+                new(ZodiacSign.Libra, MajorArcana.Adjustment),
+                new(ZodiacSign.Scorpio, MajorArcana.Death),
+                new(ZodiacSign.Sagittarius, MajorArcana.Art),
+                new(ZodiacSign.Capricorn, MajorArcana.TheDevil),
+                new(ZodiacSign.Aquarius, MajorArcana.TheStar),
+                new(ZodiacSign.Pisces, MajorArcana.TheMoon)
             });
 
-        public static ImmutableDictionary<EclipticZodiac, MajorArcana> EclipticToArcana { get; } = dataSource;
-        public static ImmutableDictionary<MajorArcana, EclipticZodiac> ArcanaToEcliptic { get; } = dataSource.ToImmutableDictionary(i => i.Value, i => i.Key);
+        public static ImmutableDictionary<ZodiacSign, MajorArcana> EclipticToArcana { get; } = dataSource;
+        public static ImmutableDictionary<MajorArcana, ZodiacSign> ArcanaToEcliptic { get; } = dataSource.ToImmutableDictionary(i => i.Value, i => i.Key);
     }
 }

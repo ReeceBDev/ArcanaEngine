@@ -190,6 +190,7 @@ namespace Thoth
                     Console.WriteLine($"""
                         ~----~ I present your: ~----~ {card.Role}
                             Introducing: {card.Number} - {card.Name}
+
                     """);
                 }
             }

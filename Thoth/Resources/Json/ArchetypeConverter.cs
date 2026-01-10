@@ -52,7 +52,43 @@ namespace Thoth.Resources.Json
             if (!root.TryGetProperty(propertyName, out JsonElement propertyElement))
                 return null;
 
-            return JsonSerializer.Deserialize<T?>(propertyElement.GetRawText(), options);
+            T? output = null;
+
+            try
+            {
+                output = JsonSerializer.Deserialize<T?>(propertyElement.GetRawText(), options);
+            }
+            catch(Exception e)
+            {
+                throw new ArgumentException($"""
+                    Failure when attempting to deserialize an Arcana from a JSON.
+                    
+                    The property {propertyName}, was expected to be deserialized as the type {typeof(T)}.
+                    Instead, an exception occurred. As follows is the JSON, then the exception.
+                    
+                    The full JSON is printed below: 
+                    {root}
+                    
+                    The exception is printed below:
+
+                    Message:
+                    {e.Message}
+
+                    Exception:
+                    {e.InnerException}
+
+                    Source:
+                    {e.Source}
+
+                    StackTrace:
+                    {e.StackTrace}
+                    """)
+                {
+
+                };
+            }
+
+            return output;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Thoth.External;
+using Thoth.External.InternalConcreteDependencies;
 using Thoth.External.Types;
 using Thoth.Resources;
 
@@ -41,8 +42,8 @@ namespace Thoth
             PerformCuspCheck(practitioner, birthDate);
 
             // Optionally, request the user's birth Time for additional correspondence cards.
-            var timeCards = GetDetailedCorrespondenceCards(practitioner, birthDate);
-            PrintCardsToConsole(timeCards);
+            practitioner.SetBirthTime(GetBirthTime(birthDate));
+            PrintDetailedCorrespondenceCards(practitioner, birthDate);
 
             Console.WriteLine($"\n\nThe letters in the hebrew alphabet have three - fold meanings, as letters, as numbers, as several various symbols..." +
                              " ~ I believe there may be alternative latin to hebrew gemetria techniques that may be explored later. ~");
@@ -52,20 +53,20 @@ namespace Thoth
             PauseConsole();
         }
 
-        static ImmutableArray<IArcanaCard> GetDetailedCorrespondenceCards(IPractitioner practitioner, DateTime birthDate)
+        static void PrintDetailedCorrespondenceCards(IPractitioner practitioner, DateTime birthDate)
         {
-            ImmutableArray<IArcanaCard> allCorrespondenceCards;
+            var birthCorrespondences = practitioner.GetCorrespondenceCards();
 
-            practitioner.SetBirthTime(ReadBirthTime(birthDate));
+            foreach (ICorrespondence correspondence in birthCorrespondences)
+            {
+                ImmutableArray<IArcanaCard> cards = [correspondence.Zodiac, correspondence.Court, correspondence.Decan];
 
-            allCorrespondenceCards = practitioner.GetCorrespondenceCards()
-                .SelectMany(i => ImmutableArray.Create(i.Court, i.Decan, i.Zodiac))
-                .ToImmutableArray();
-
-            return allCorrespondenceCards;
+                Console.WriteLine($"\n{correspondence.Role} Cards: ");
+                PrintCardsToConsole(cards); 
+            }
         }
 
-        static DateTimeOffset ReadBirthTime(DateTime birthDate)
+        static DateTimeOffset GetBirthTime(DateTime birthDate)
         {
             int birthHour;
             int birthMinutes;
@@ -181,8 +182,6 @@ namespace Thoth
 
         static void PrintCardsToConsole(params ImmutableArray<IArcanaCard>[] setsOfCards)
         {
-            Console.WriteLine("\n\nCards: \n");
-
             foreach (ImmutableArray<IArcanaCard> set in setsOfCards)
             {
                 foreach (IArcanaCard card in set)

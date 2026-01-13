@@ -20,10 +20,10 @@ namespace Thoth.Types.Practitioner
         (double latitude, double longitude)? LocationOfBirth { get; }
 
 
-        /// <summary> Arcana and archetypical represention of a practitioner's personality. </summary>
+        /// <summary> Arcana and archetypical represention of a practitioner's external personality. </summary>
         IArchetype? PersonalityCard { get; }
 
-        /// <summary> Arcana and archetypical represention of a practitioner's character. </summary>
+        /// <summary> Arcana and archetypical represention of a practitioner's inner nature. </summary>
         IArchetype? TeacherCard { get; }
 
         /// <summary> Growth cards are cyclical. To represent a greater count, an offset is cached instead of a particular growth card.

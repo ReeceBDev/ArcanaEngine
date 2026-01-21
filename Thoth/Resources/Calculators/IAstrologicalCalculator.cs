@@ -11,6 +11,6 @@ namespace Thoth.Resources.Calculators
         IEclipticDegree ApproximateZodiacalSun(DateTime birthDate);
         IEclipticDegree GetCelestialPositionByTime(CelestialBody body, DateTimeOffset birthTime);
         IEclipticDegree GetAscendantByTime(DateTimeOffset birthTime, double latitude, double longitude);
-        bool CheckIfNearCusp(DateTime birthDate);
+        bool CheckIfZodiacalSunNearCusp(DateTime birthDate);
     }
 }

@@ -14,18 +14,23 @@ namespace Thoth.Resources.Calculators
             // swissEph.swe_set_ephe_path("path/to/ephemeris/files");
         }
 
-        public bool CheckIfNearCusp(DateTime birthDate)
+        public bool CheckIfZodiacalSunNearCusp(DateTime birthDate)
         {
+            int maximumHoursAhead = 14;
+            int maximumHoursEarlier = 12;
+
             double julianDay = ToJulianDay(birthDate, 12.0);
-            double julianDayBefore = julianDay - 1;
-            double julianDayAfter = julianDay + 1;
+            double julianDayBefore = ToJulianDay(birthDate.AddHours(-maximumHoursEarlier));
+            double julianDayAfter = ToJulianDay(birthDate.AddHours(maximumHoursAhead)); 
 
             ZodiacSign degreeBefore = CalculateZodiacalSunDegree(julianDayBefore).Sign;
             ZodiacSign degreeNow = CalculateZodiacalSunDegree(julianDay).Sign;
             ZodiacSign degreeAfter = CalculateZodiacalSunDegree(julianDayAfter).Sign;
 
+            bool areDegreesIdentical = (degreeBefore == degreeNow && degreeNow == degreeAfter);
+
             // Check if sign changes within the day before or after
-            return (degreeNow != degreeBefore || degreeNow != degreeAfter);
+            return !areDegreesIdentical;
         }
 
         public IEclipticDegree ApproximateZodiacalSun(DateTime birthDate)
@@ -110,7 +115,7 @@ namespace Thoth.Resources.Calculators
                 throw new InvalidOperationException($"Failed to calculate Sun position: {serr}");
 
             int absoluteDegree = (int)Math.Floor(position[0]);
-            //old code return (EclipticZodiac)(absoluteDegree / 30);
+
             return new EclipticDegree(absoluteDegree);
         }
 

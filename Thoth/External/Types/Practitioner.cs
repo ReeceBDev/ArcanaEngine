@@ -226,8 +226,15 @@ namespace Thoth.External.Types
 
         public bool CheckWhetherZodiacalSunIsAccurate(DateTime birthDate)
         {
-            SetBirthdate(birthDate);
-            return astrologicalCalculator.CheckIfNearCusp(birthDate);
+            if (currentPractitioner.DateOfBirth != birthDate)
+            { 
+                SetBirthdate(birthDate);
+            }
+
+            bool isNearCusp = astrologicalCalculator.CheckIfZodiacalSunNearCusp(birthDate);
+
+            // We are accurate enough, when we are not near the cusp.
+            return !isNearCusp;
         }
     }
 }

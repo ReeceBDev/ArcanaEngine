@@ -197,8 +197,10 @@ namespace Thoth
 
         static void PerformCuspCheck(IPractitioner practitioner, DateTime birthDate)
         {
+            bool isSignAccurateEnough = practitioner.CheckWhetherZodiacalSunIsAccurate(birthDate);
+
             // Check that they are valid
-            if (!practitioner.CheckWhetherZodiacalSunIsAccurate(birthDate))
+            if (!isSignAccurateEnough)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
 

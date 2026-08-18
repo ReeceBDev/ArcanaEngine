@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Disks",
+    "Number": 10,
+    "Name": "Wealth",
+    "ShortDescription": "Wealth, Material completion, Riches"
+  },
+  "Zodiac": "Virgo",
+  "Element": "Earth",
+  "Mode": "Mutable"
+}

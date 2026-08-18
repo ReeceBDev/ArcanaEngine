@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    },
+    "Thoth Example Demo": {
+      "commandName": "Project",
+      "commandLineArgs": "--run-example"
+    },
+    "Thoth Web API Host": {
+      "commandName": "Project",
+      "commandLineArgs": "--host-api"
+    }
+  }
+}

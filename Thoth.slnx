@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Thoth.WebAPI/Thoth.WebAPI.csproj" Id="f9365026-b6e7-45ca-ad69-e3a18869deff" />
+  <Project Path="Thoth/Thoth.csproj" />
+</Solution>

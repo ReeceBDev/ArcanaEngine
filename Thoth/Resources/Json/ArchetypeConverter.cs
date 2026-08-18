@@ -1,0 +1,94 @@
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Thoth.Types.Alchemy;
+using Thoth.Types.Thoth;
+using Thoth.Types.Zodiacal;
+
+namespace Thoth.Resources.Json
+{
+    internal class ArchetypeConverter : JsonConverter<Archetype>
+    {
+        public override Archetype Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            Archetype archetype;
+            using JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            JsonElement root = doc.RootElement;
+
+            // Deserialize nested types as concrete implementations of their interfaces
+            Arcana? arcana = JsonSerializer.Deserialize<Arcana>(root.GetProperty("Arcana").GetRawText(), options);            
+
+            // Validate whether arcana has been set correctly.
+            if (arcana is null)
+                throw new JsonException("Required property 'Arcana' is missing or invalid. This type is essential as it forms the basis of the archetype!");
+
+            // Deserialize implicitly concrete types (enums)
+            AlchemicalElement? element = DeserializeNullableProperty<AlchemicalElement>(root, "Element", options);
+            AstrologicalMode? mode = DeserializeNullableProperty<AstrologicalMode>(root, "Mode", options);
+            ZodiacSign? zodiac = DeserializeNullableProperty<ZodiacSign>(root, "Zodiac", options);
+
+
+            // Combine all realized data structures together into the whole and final type
+            archetype = new Archetype
+            {
+                Arcana = arcana,
+                Element = element,
+                Mode = mode,
+                Zodiac = zodiac
+            };
+
+            return archetype;
+        }
+
+        public override void Write(Utf8JsonWriter writer, Archetype value, JsonSerializerOptions options)
+        {
+            throw new NotSupportedException("Serialization of ArchetypeData is not supported.");
+        }
+
+        /// <summary>
+        /// Helper method to deserialize an optional nullable property.
+        /// </summary>
+        private static T? DeserializeNullableProperty<T>(JsonElement root, string propertyName, JsonSerializerOptions options) where T : struct
+        {
+            if (!root.TryGetProperty(propertyName, out JsonElement propertyElement))
+                return null;
+
+            T? output = null;
+
+            try
+            {
+                output = JsonSerializer.Deserialize<T?>(propertyElement.GetRawText(), options);
+            }
+            catch(Exception e)
+            {
+                throw new ArgumentException($"""
+                    Failure when attempting to deserialize an Arcana from a JSON.
+                    
+                    The property {propertyName}, was expected to be deserialized as the type {typeof(T)}.
+                    Instead, an exception occurred. As follows is the JSON, then the exception.
+                    
+                    The full JSON is printed below: 
+                    {root}
+                    
+                    The exception is printed below:
+
+                    Message:
+                    {e.Message}
+
+                    Exception:
+                    {e.InnerException}
+
+                    Source:
+                    {e.Source}
+
+                    StackTrace:
+                    {e.StackTrace}
+                    """)
+                {
+
+                };
+            }
+
+            return output;
+        }
+    }
+}

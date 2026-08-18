@@ -1,0 +1,12 @@
+{
+  "Arcana": {
+    "Categorization": "Minor",
+    "Suit": "Wands",
+    "Number": 6,
+    "Name": "Victory",
+    "ShortDescription": "Victory, Triumph, Success"
+  },
+  "Zodiac": "Leo",
+  "Element": "Fire",
+  "Mode": "Fixed"
+}

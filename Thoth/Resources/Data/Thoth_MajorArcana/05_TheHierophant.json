@@ -1,0 +1,11 @@
+{
+  "Arcana": {
+    "Categorization": "Major",
+    "Number": 5,
+    "Name": "The Hierophant",
+    "ShortDescription": "Tradition, Spiritual Wisdom, Conformity"
+  },
+  "Zodiac": "Taurus",
+  "Element": "Earth",
+  "Mode": "Fixed"
+}

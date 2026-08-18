@@ -1,0 +1,10 @@
+{
+  "Arcana": {
+    "Categorization": "Major",
+    "Number": 1,
+    "Name": "The Magus",
+    "ShortDescription": "Skill, Willpower, Action"
+  },
+  "Element": "Air",
+  "Mode": "Cardinal"
+}

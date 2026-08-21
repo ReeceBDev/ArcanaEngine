@@ -69,7 +69,11 @@ namespace Thoth.Resources.Json
             string filePath;
             string arcanaJson;
             IArchetype? arcanaArchetype;
-            string[] matchingFiles = Directory.GetFiles(rootPath, searchPattern);
+            // Windows matches filenames case-insensitively; Linux containers do not.
+            // Compare against the enum name ourselves rather than trusting the filesystem glob.
+            string[] matchingFiles = Array.FindAll(
+                Directory.GetFiles(rootPath),
+                path => Path.GetFileName(path).EndsWith($"_{arcanaIdentity.ToString()}.json", StringComparison.OrdinalIgnoreCase));
 
             JsonSerializerOptions options = new();
             options.Converters.Add(new ArchetypeConverter());

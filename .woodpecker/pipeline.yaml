@@ -1,0 +1,19 @@
+# ArcanaEngine pipeline — plan §3.6/§3.7: CI holds NOTHING.
+# dev push: build+test only (feedback). master merge: build+test+push (engine cert).
+# The docker socket is mounted into steps by the agent (WOODPECKER_BACKEND_DOCKER_VOLUMES);
+# registry auth = the ENGINE's certs.d — zero secrets in this file.
+when:
+  branch: [master, dev]
+steps:
+  build-test:
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    commands:
+      - dotnet build -c Release
+      - dotnet test -c Release
+  push-image:
+    image: docker:cli
+    when:
+      branch: master
+    commands:
+      - docker build -t registry.divineapps.co.uk:5000/arcanaengine:${CI_COMMIT_SHA:0:8} .
+      - docker push registry.divineapps.co.uk:5000/arcanaengine:${CI_COMMIT_SHA:0:8}

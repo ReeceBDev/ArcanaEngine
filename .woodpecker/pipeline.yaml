@@ -1,9 +1,12 @@
 # ArcanaEngine pipeline — plan §3.6/§3.7: CI holds NOTHING.
-# dev push: build+test only (feedback). master merge: build+test+push (engine cert).
+# dev + master pushes: build+test, then push <branch>-<sha> (engine cert).
+# Both branches roll the DEV deployment automatically (last good build wins;
+# a broken build never replaces the running one). Prod moves only by
+# rbowen's promotion (his cert retags master-<sha> → :prod).
 # The docker socket is mounted into steps by the agent (WOODPECKER_BACKEND_DOCKER_VOLUMES);
 # registry auth = the ENGINE's certs.d — zero secrets in this file.
 when:
-  branch: [master, dev]
+  branch: [dev, master]
 steps:
   build-test:
     image: mcr.microsoft.com/dotnet/sdk:10.0
@@ -12,8 +15,6 @@ steps:
       - dotnet test -c Release
   push-image:
     image: docker:cli
-    when:
-      branch: master
     commands:
-      - docker build -t registry.divineapps.co.uk:5000/arcanaengine:${CI_COMMIT_SHA:0:8} .
-      - docker push registry.divineapps.co.uk:5000/arcanaengine:${CI_COMMIT_SHA:0:8}
+      - docker build -t registry.divinearts.co.uk:5000/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} .
+      - docker push registry.divinearts.co.uk:5000/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}

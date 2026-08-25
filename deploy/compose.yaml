@@ -1,6 +1,9 @@
-# ArcanaEngine runtime — deployed by the deploy-target as TWO coexisting projects:
-#   arcanaengine-dev  on DEV_PORT  (automatic: every dev-*/master-* tag push)
-#   arcanaengine-prod on PROD_PORT (rbowen's promotion only — same digest, retagged)
+# ArcanaEngine runtime — deployed by the deploy-target as THREE coexisting projects:
+#   arcanaengine-dev         on DEV_PORT  (automatic: every dev-<sha8> tag push)
+#   arcanaengine-pre-release on PRE_PORT  (automatic: every master-<sha8> tag push)
+#   arcanaengine-prod        on PROD_PORT (rbowen's promotion only — same
+#                                          digest, retagged, from the
+#                                          pre-release record)
 # TAG + PORT are injected by the deployer from THIS repo's deploy/ports.env.
 # Redeploy of a project = replace (compose convergence), not a second instance.
 services:

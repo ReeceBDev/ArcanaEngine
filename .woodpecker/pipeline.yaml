@@ -18,3 +18,21 @@ steps:
     commands:
       - docker build -t registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} .
       - docker push registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}
+  prune-old-builds:
+    image: docker:cli
+    # Event-driven CI hygiene (2026-09-02): this engine never makes local
+    # -ci images, but every PUSH leaves a copy of the pushed tag in the CI
+    # engine's store (docker-push cache). THIS build's tag is the newest —
+    # older per-commit push-caches are dead weight. Touches ONLY CI-daemon-
+    # local copies; the registry and prod are unaffected. Filters accept
+    # only per-commit artifact tags, so :prod/:latest/base images can never
+    # match. Runs on success AND failure (failed builds leave corpses too).
+    # Best-effort: a prune failure never fails the build.
+    when:
+      status: [success, failure]
+    commands:
+      - |
+        docker images --format '{{.Repository}}:{{.Tag}}' \
+          | grep -E '^registry\.divinearts\.co\.uk/arcanaengine:(dev|master)-[0-9a-f]{8}$' \
+          | grep -v -e 'registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}' \
+          | xargs -r docker rmi || true

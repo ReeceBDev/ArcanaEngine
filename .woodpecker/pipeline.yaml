@@ -16,8 +16,34 @@ steps:
   push-image:
     image: docker:cli
     commands:
-      - docker build -t registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} .
-      - docker push registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}
+      - |
+        # retry N cmd... — transient-blip armour for docker builds (2026-09-03).
+        # The CI engine is a rootless daemon in an IPv4-only slirp4netns
+        # namespace: every auth.docker.io AAAA dial dies instantly with
+        # "network is unreachable", and builds only survive because the
+        # dialer falls back to IPv4. When a v4 blip lands in the same
+        # moment the build dies with that misleading v6 error (frontend
+        # master b5666ba2, 2026-09-03) — a retry covers the gap.
+        # BRACE-LESS law respected: no dollar-brace vars below.
+        retry() {
+          attempts=$1
+          shift
+          n=1
+          while :; do
+            if "$@"; then
+              return 0
+            fi
+            if [ "$n" -ge "$attempts" ]; then
+              echo "retry: giving up after $n attempts: $*" >&2
+              return 1
+            fi
+            echo "retry: attempt $n of $attempts failed, sleeping 10s" >&2
+            n=$((n+1))
+            sleep 10
+          done
+        }
+        retry 3 docker build -t registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} .
+        docker push registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}
   prune-old-builds:
     image: docker:cli
     # Event-driven CI hygiene (2026-09-02): this engine never makes local

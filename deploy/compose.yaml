@@ -12,3 +12,10 @@ services:
     restart: unless-stopped
     ports:
       - "${PORT:?set by deployer}:8080"
+    environment:
+      # global error envelope (UnhandledExceptionHandler): exception `detail` in
+      # 500 bodies defaults OFF when ASPNETCORE_ENVIRONMENT=Production. The
+      # override lives in the canonical env file (~/.secrets/service-env/
+      # arcanaengine.env), never in git — see development-instructions/
+      # API-ERROR-ENVELOPE.md.
+      Diagnostics__IncludeExceptionDetail: "${DIAGNOSTICS_INCLUDEEXCEPTIONDETAIL:-}"

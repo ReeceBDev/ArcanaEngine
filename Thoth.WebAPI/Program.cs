@@ -34,6 +34,10 @@ namespace Thoth.WebAPI
             app.MapReadingEndpoints();
             app.MapAstroEndpoints();
 
+            // Build identity (branch-sha, injected at docker build) so callers can
+            // compare what's live against git without walking CI/CD.
+            app.MapGet("/healthz", () => Results.Ok(new { status = "ok", version = Environment.GetEnvironmentVariable("APP_VERSION") ?? "local" }));
+
             app.Run();
         }
     }

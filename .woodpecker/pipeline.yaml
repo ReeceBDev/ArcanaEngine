@@ -42,7 +42,7 @@ steps:
             sleep 10
           done
         }
-        retry 3 docker build -t registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} .
+        retry 3 docker build --build-arg APP_VERSION=${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} -t registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8} .
         docker push registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}
   prune-old-builds:
     image: docker:cli

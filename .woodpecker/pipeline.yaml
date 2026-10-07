@@ -62,3 +62,15 @@ steps:
           | grep -E '^registry\.divinearts\.co\.uk/arcanaengine:(dev|master)-[0-9a-f]{8}$' \
           | grep -v -e 'registry.divinearts.co.uk/arcanaengine:${CI_COMMIT_BRANCH}-${CI_COMMIT_SHA:0:8}' \
           | xargs -r docker rmi || true
+  notify-wake:
+    image: curlimages/curl:8.10.1
+    when:
+      status: [success, failure]
+    commands:
+      - |
+        curl -sS --retry 3 --max-time 5 \
+          --cacert /wake-ca/ca.crt \
+          --cert /wake-ca/ci-producer.crt --key /wake-ca/ci-producer.key \
+          -H 'Content-Type: application/json' \
+          -d "{\"repo\":\"$CI_REPO\",\"sha\":\"$CI_COMMIT_SHA\",\"status\":\"$CI_PIPELINE_STATUS\",\"source\":\"ci\"}" \
+          https://wake-internal.divinearts.co.uk/ci-event || true
